@@ -1,0 +1,7 @@
+<div class="board" (click)="goToBoard($event)">
+  <h2>{{ board?.boardTitle }}</h2>
+  <h3>Columns: {{ board?.columns?.length || 0 }}</h3>
+  <button mat-fab color="primary" (click)="deleteBoard($event)">
+    <mat-icon>delete</mat-icon>
+  </button>
+</div>

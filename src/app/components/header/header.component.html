@@ -1,27 +1,31 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="navbar navbar-expand-lg">
   <div class="container d-flex justify-content-between">
-      <img
-        src="../../../assets/project-management.png"
-        class="me-5"
-        height="36"
-        alt=""
-        loading="lazy"
-      />
-    <div class="navbar d-flex flex-grow-1 justify-content-end justify-content-sm-between">
-        <span class="nav-link d-none d-sm-block">Project Management Tool</span>
+    <img
+      src="../../../assets/project-management.png"
+      class="me-2"
+      height="36"
+      alt=""
+    />
+    <div
+      class="navbar d-flex flex-grow-1 justify-content-end justify-content-sm-between"
+    >
+      <span class="nav-link d-none d-sm-block header"
+        >Project Management Tool</span
+      >
+      <div class="d-flex flex-column align-items-end">
+        <button mat-button color="primary">EN/UA</button>
         <div class="d-flex align-items-center">
-            <button mat-raised-button>
-            Login
-            </button>
-            <button mat-raised-button>
-            Sign up
-            </button>       
+          <button *ngIf="!token" mat-button class="me-2">Login</button>
+          <button *ngIf="!token" mat-button>Sign up</button>
+          <span *ngIf="token">Name</span>
+          <button *ngIf="token" mat-icon-button color="primary">
+            <mat-icon>person icon</mat-icon>
+          </button>
+          <button *ngIf="token" mat-button (click)="toggleToken()">
+            Logout
+          </button>
         </div>
+      </div>
     </div>
   </div>
-</nav>
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <div class="container d-flex justify-content-end">
-        <button mat-button color="primary">EN</button>
-    </div>
 </nav>

@@ -1,0 +1,8 @@
+<div class="container">
+  <h2 class="text-center p-3">Boards</h2>
+  <mat-divider></mat-divider>
+  <div class="boards-container">
+    <div class="board" (click)="addNewBoard()">create new board</div>
+    <app-board *ngFor="let board of boards" [board]="board"></app-board>
+  </div>
+</div>

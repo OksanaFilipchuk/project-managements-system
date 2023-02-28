@@ -1,7 +1,23 @@
 /* You can add global styles to this file, and also import other style files */
 
 /* Importing Bootstrap SCSS file. */
-@import 'bootstrap/scss/bootstrap';
+@import "bootstrap/scss/bootstrap";
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+body {
+  // font-family: "Poppins", sans-serif;
+
+  margin: 0;
+  font-family: "Shantell Sans", cursive;
+  // font-family: Roboto, "Helvetica Neue", sans-serif;
+  background: rgb(255, 255, 255);
+  background: linear-gradient(
+      177deg,
+      rgba(255, 255, 255, 0.9) 0%,
+      rgba(193, 246, 237, 0.9) 0%,
+      rgba(73, 101, 103, 0.9) 100%
+    ),
+    url(./assets/water.png);
+}
+main {
+  min-height: calc(100vh - 176px);
+}
