@@ -8,7 +8,12 @@ import { Router } from '@angular/router';
 })
 export class AppComponent {
   constructor(private route: Router) {}
-  navigateTo() {
-    this.route.navigate(['Boards']);
+
+  navigateTo(event: any) {
+    if (event.token) {
+      this.route.navigate(['Boards']);
+    } else {
+      this.route.navigate(['Welcome']);
+    }
   }
 }

@@ -1,11 +1,13 @@
-<app-header (changeToken)="navigateTo()"></app-header>
+<app-header (changeAppToken)="navigateTo($event)"></app-header>
 <main>
   <!-- <app-modal title="New board">
     <app-new-board></app-new-board>
   </app-modal> -->
 
-  <app-welcome-route></app-welcome-route>
+  <!-- <app-welcome-route></app-welcome-route> -->
+  <!-- <app-board></app-board> -->
+  <!-- <app-boards-route></app-boards-route> -->
 
-  <!-- <router-outlet></router-outlet> -->
+  <router-outlet></router-outlet>
 </main>
 <app-footer></app-footer>

@@ -1,0 +1,17 @@
+<div class="d-flex align-items-center">
+  <button *ngIf="!token" mat-button class="me-2">Login</button>
+  <button *ngIf="!token" mat-button (click)="showSingUpForm()">Sign up</button>
+  <span *ngIf="token">{{ userName }}</span>
+  <button *ngIf="token" mat-icon-button color="primary">
+    <mat-icon>person icon</mat-icon>
+  </button>
+  <button *ngIf="token" mat-button (click)="logout()">Logout</button>
+  <app-modal
+    *ngIf="modalService.isVisible$.value"
+    title="Sing up"
+    submitButton="Join"
+  >
+    <app-sing-up-form (signUp)="onSignUp($event)"></app-sing-up-form>
+    <app-sing-in-form></app-sing-in-form>
+  </app-modal>
+</div>

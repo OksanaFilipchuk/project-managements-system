@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { MainRouteComponent } from './main-route.component';
+import { SingUpFormComponent } from './sing-up-form.component';
 
-describe('MainRouteComponent', () => {
-  let component: MainRouteComponent;
-  let fixture: ComponentFixture<MainRouteComponent>;
+describe('SingUpFormComponent', () => {
+  let component: SingUpFormComponent;
+  let fixture: ComponentFixture<SingUpFormComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ MainRouteComponent ]
+      declarations: [ SingUpFormComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(MainRouteComponent);
+    fixture = TestBed.createComponent(SingUpFormComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

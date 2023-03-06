@@ -1,6 +1,7 @@
 import { Component, Input, Output } from '@angular/core';
-import { Board } from 'src/app/models/models';
+import { Board } from '../../models/board.model';
 import { Router } from '@angular/router';
+
 @Component({
   selector: 'app-board',
   templateUrl: './board.component.html',
@@ -16,5 +17,7 @@ export class BoardComponent {
     this.router.navigate(['Board']);
   }
 
-  deleteBoard(event: Event) {}
+  deleteBoard(event: Event) {
+    console.log('delete');
+  }
 }

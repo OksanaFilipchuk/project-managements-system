@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { ModalServiceService } from '../../services/modal-service.service';
 
 @Component({
   selector: 'app-modal',
@@ -6,5 +7,8 @@ import { Component, Input } from '@angular/core';
   styleUrls: ['./modal.component.scss'],
 })
 export class ModalComponent {
-  @Input() title: string = '';
+  @Input() title = '';
+  // @Input() submitButton = '';
+
+  constructor(public modalService: ModalServiceService) {}
 }

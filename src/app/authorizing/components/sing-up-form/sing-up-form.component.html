@@ -1,0 +1,37 @@
+<form class="form" (submit)="onSubmit()" [formGroup]="userForm">
+  <mat-form-field>
+    <mat-label>Name</mat-label>
+    <input
+      matInput
+      placeholder="Ex. David"
+      id="name"
+      name="name"
+      formControlName="name"
+    />
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Login</mat-label>
+    <input
+      matInput
+      placeholder="Ex. David"
+      id="login"
+      name="login"
+      formControlName="login"
+    />
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Password</mat-label>
+    <input
+      matInput
+      type="password"
+      placeholder="enter your password"
+      id="password"
+      name="password"
+      formControlName="password"
+    />
+  </mat-form-field>
+  <button mat-button color="primary" (click)="closeModal()">Close</button>
+  <button mat-button color="primary" type="submit" value="submitButton">
+    Join
+  </button>
+</form>
