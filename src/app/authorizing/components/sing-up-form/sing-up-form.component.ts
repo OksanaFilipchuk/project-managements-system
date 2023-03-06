@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Output, Input } from '@angular/core';
 import { ModalServiceService } from 'src/app/shared/services/modal-service.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { User } from '../../models/models';
@@ -14,19 +14,18 @@ export class SingUpFormComponent {
     public modalService: ModalServiceService
   ) {}
 
+  @Input() isUserNew = true;
+
   userForm: FormGroup = this.formBuilder.group({
     name: '',
     login: '',
     password: '',
   });
 
-  @Output() signUp = new EventEmitter<User>();
+  @Output() authEvent = new EventEmitter<User>();
 
   onSubmit() {
-    this.signUp.emit({ ...this.userForm.value });
-
-    // this.authorize.signUpPost({ ...this.userForm.value });
-    // console.log({ ...this.userForm.value });
+    this.authEvent.emit({ ...this.userForm.value });
   }
 
   closeModal() {

@@ -12,7 +12,6 @@ export class AuthorizingComponent {
   token = Boolean(localStorage.getItem('token'));
   isUserNew = true;
   userName = '';
-  modalTitle = '';
 
   constructor(
     public modalService: ModalServiceService,
@@ -27,6 +26,11 @@ export class AuthorizingComponent {
   }
 
   showSingUpForm() {
+    this.isUserNew = true;
+    this.modalService.open();
+  }
+  showLoginForm() {
+    this.isUserNew = false;
     this.modalService.open();
   }
 
@@ -40,16 +44,30 @@ export class AuthorizingComponent {
     this.authorizeService.removeToken();
   }
 
-  onSignUp(data: User) {
-    this.authorizeService.signUp(data).subscribe((res) => {
-      console.log(res);
+  authorize(data: User) {
+    if (this.isUserNew) {
+      this.authorizeService.signUp(data).subscribe((res) => {
+        this.authorizeService
+          .signIn({
+            login: data.login,
+            password: data.password,
+          })
+          .subscribe((res) => {
+            if (res.token) {
+              this.authorizeService.setToken(res.token);
+              this.userName = data.name ? data.name : this.userName;
+              this.closeSingUpForm();
+              this.toggleToken();
+            }
+          });
+      });
+    } else {
       this.authorizeService
         .signIn({
-          login: res.login,
+          login: data.login,
           password: data.password,
         })
         .subscribe((res) => {
-          console.log(res.token);
           if (res.token) {
             this.authorizeService.setToken(res.token);
             this.userName = data.name ? data.name : this.userName;
@@ -57,6 +75,6 @@ export class AuthorizingComponent {
             this.toggleToken();
           }
         });
-    });
+    }
   }
 }
