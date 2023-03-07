@@ -1,0 +1,16 @@
+<h2 class="text-center">Create new board</h2>
+<form class="form" (submit)="onSubmit()" [formGroup]="boardForm">
+  <mat-form-field>
+    <mat-label>Board title</mat-label>
+    <input matInput placeholder="Ex. David" formControlName="title" />
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Add user</mat-label>
+    <input matInput type="string" formControlName="user" />
+  </mat-form-field>
+  <!-- <button mat-button color="primaSry" (click)="closeModal()">Close</button> -->
+  <button mat-button color="primary" (click)="onClick()">Close</button>
+  <button mat-button color="primary" type="submit" value="submitButton">
+    Create
+  </button>
+</form>

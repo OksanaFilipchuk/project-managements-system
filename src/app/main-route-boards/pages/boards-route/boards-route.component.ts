@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Board } from '../../models/board.model';
 import { BoardsService } from '../../services/boards.service';
+import { ModalServiceService } from 'src/app/shared/services/modal-service.service';
 
 @Component({
   selector: 'app-boards-route',
@@ -10,7 +11,10 @@ import { BoardsService } from '../../services/boards.service';
 export class BoardsRouteComponent implements OnInit {
   boards: Board[] = [];
 
-  constructor(private boardsService: BoardsService) {}
+  constructor(
+    private boardsService: BoardsService,
+    public modalService: ModalServiceService
+  ) {}
 
   ngOnInit(): void {
     this.getBoards();
@@ -23,6 +27,10 @@ export class BoardsRouteComponent implements OnInit {
   }
 
   addNewBoard() {
-    console.log('new');
+    this.modalService.open();
+  }
+
+  closeModal() {
+    this.modalService.close();
   }
 }

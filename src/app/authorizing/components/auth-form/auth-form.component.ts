@@ -4,11 +4,11 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { User } from '../../models/models';
 
 @Component({
-  selector: 'app-sing-up-form',
-  templateUrl: './sing-up-form.component.html',
-  styleUrls: ['./sing-up-form.component.scss'],
+  selector: 'app-auth-form',
+  templateUrl: './auth-form.component.html',
+  styleUrls: ['./auth-form.component.scss'],
 })
-export class SingUpFormComponent {
+export class AuthFormComponent {
   constructor(
     private formBuilder: FormBuilder,
     public modalService: ModalServiceService

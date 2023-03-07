@@ -9,9 +9,9 @@
   </button>
   <button *ngIf="token" mat-button (click)="logout()">Logout</button>
   <app-modal *ngIf="modalService.isVisible$.value">
-    <app-sing-up-form
+    <app-auth-form
       (authEvent)="authorize($event)"
       [isUserNew]="isUserNew"
-    ></app-sing-up-form>
+    ></app-auth-form>
   </app-modal>
 </div>

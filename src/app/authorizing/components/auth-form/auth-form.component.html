@@ -2,23 +2,11 @@
 <form class="form" (submit)="onSubmit()" [formGroup]="userForm">
   <mat-form-field *ngIf="isUserNew">
     <mat-label>Name</mat-label>
-    <input
-      matInput
-      placeholder="Ex. David"
-      id="name"
-      name="name"
-      formControlName="name"
-    />
+    <input matInput placeholder="Ex. David" formControlName="name" />
   </mat-form-field>
   <mat-form-field>
     <mat-label>Login</mat-label>
-    <input
-      matInput
-      placeholder="Ex. David"
-      id="login"
-      name="login"
-      formControlName="login"
-    />
+    <input matInput placeholder="Ex. David" formControlName="login" />
   </mat-form-field>
   <mat-form-field>
     <mat-label>Password</mat-label>
@@ -26,8 +14,6 @@
       matInput
       type="password"
       placeholder="enter your password"
-      id="password"
-      name="password"
       formControlName="password"
     />
   </mat-form-field>

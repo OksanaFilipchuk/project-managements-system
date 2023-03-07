@@ -7,6 +7,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatListModule } from '@angular/material/list';
+import { MatDividerModule } from '@angular/material/divider';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [ModalComponent],
@@ -17,6 +19,8 @@ import { MatListModule } from '@angular/material/list';
     MatButtonModule,
     MatTabsModule,
     MatListModule,
+    MatDividerModule,
+    ReactiveFormsModule,
   ],
   exports: [
     ModalComponent,
@@ -27,6 +31,8 @@ import { MatListModule } from '@angular/material/list';
     MatButtonModule,
     MatTabsModule,
     MatListModule,
+    MatDividerModule,
+    ReactiveFormsModule,
   ],
 })
 export class SharedModule {}

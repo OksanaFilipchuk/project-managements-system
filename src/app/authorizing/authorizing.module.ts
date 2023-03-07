@@ -4,14 +4,14 @@ import { AuthorizingComponent } from './components/authorizing/authorizing.compo
 import { SharedModule } from '../shared/shared.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-import { SingUpFormComponent } from './components/sing-up-form/sing-up-form.component';
+import { AuthFormComponent } from './components/auth-form/auth-form.component';
 import { AuthorizeService } from './services/authorize.service';
-import { SingInFormComponent } from './components/sing-in-form/sing-in-form.component';
+import { ModalServiceService } from '../shared/services/modal-service.service';
 
 @NgModule({
-  declarations: [AuthorizingComponent, SingUpFormComponent, SingInFormComponent],
+  declarations: [AuthorizingComponent, AuthFormComponent],
   imports: [CommonModule, SharedModule, FormsModule, ReactiveFormsModule],
   exports: [AuthorizingComponent],
-  providers: [AuthorizeService],
+  providers: [AuthorizeService, ModalServiceService],
 })
 export class AuthorizingModule {}

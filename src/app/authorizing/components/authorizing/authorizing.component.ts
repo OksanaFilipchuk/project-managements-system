@@ -12,6 +12,7 @@ export class AuthorizingComponent {
   token = Boolean(localStorage.getItem('token'));
   isUserNew = true;
   userName = '';
+  userLogin = '';
 
   constructor(
     public modalService: ModalServiceService,
@@ -29,6 +30,7 @@ export class AuthorizingComponent {
     this.isUserNew = true;
     this.modalService.open();
   }
+
   showLoginForm() {
     this.isUserNew = false;
     this.modalService.open();
@@ -56,6 +58,7 @@ export class AuthorizingComponent {
             if (res.token) {
               this.authorizeService.setToken(res.token);
               this.userName = data.name ? data.name : this.userName;
+              this.userLogin = res.login;
               this.closeSingUpForm();
               this.toggleToken();
             }
@@ -71,6 +74,7 @@ export class AuthorizingComponent {
           if (res.token) {
             this.authorizeService.setToken(res.token);
             this.userName = data.name ? data.name : this.userName;
+            this.userLogin = res.login;
             this.closeSingUpForm();
             this.toggleToken();
           }
