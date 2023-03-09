@@ -9,9 +9,11 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatListModule } from '@angular/material/list';
 import { MatDividerModule } from '@angular/material/divider';
 import { ReactiveFormsModule } from '@angular/forms';
+import { ConfirmationComponent } from './components/confirmation/confirmation.component';
+import { FilterByLoginPipe } from './pipes/filter-by-login.pipe';
 
 @NgModule({
-  declarations: [ModalComponent],
+  declarations: [ModalComponent, ConfirmationComponent, FilterByLoginPipe],
   imports: [
     CommonModule,
     MatIconModule,
@@ -24,6 +26,7 @@ import { ReactiveFormsModule } from '@angular/forms';
   ],
   exports: [
     ModalComponent,
+    ConfirmationComponent,
     CommonModule,
     NgbModule,
     MatIconModule,
@@ -33,6 +36,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     MatListModule,
     MatDividerModule,
     ReactiveFormsModule,
+    FilterByLoginPipe,
   ],
 })
 export class SharedModule {}

@@ -1,7 +1,14 @@
-<div class="board" (click)="goToBoard($event)">
-  <h2>{{ board?.title }}</h2>
-  <h3>Owner: {{ board?.owner }}</h3>
-  <button mat-fab color="primary" (click)="deleteBoard($event)">
+<div class="board">
+  <h2 (click)="goToBoard()">{{ board.title }}</h2>
+  <h3>Owner: {{ board.owner }}</h3>
+  <button mat-fab color="primary" (click)="onClick()">
     <mat-icon>delete</mat-icon>
   </button>
+  <!-- <app-modal *ngIf="modalService.isVisible$.value">
+    <app-confirmation
+      *ngIf="modalService.isVisible$.value"
+      title="Do you want to remove board?"
+      (confirmEvent)="confirmHandle($event)"
+    ></app-confirmation>
+  </app-modal> -->
 </div>

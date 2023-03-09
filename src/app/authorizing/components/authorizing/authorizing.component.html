@@ -3,14 +3,14 @@
     Log in
   </button>
   <button *ngIf="!token" mat-button (click)="showSingUpForm()">Sign up</button>
-  <span *ngIf="token">{{ userName }}</span>
+  <span *ngIf="token">{{ userLogin }}</span>
   <button *ngIf="token" mat-icon-button color="primary">
     <mat-icon>person icon</mat-icon>
   </button>
   <button *ngIf="token" mat-button (click)="logout()">Logout</button>
   <app-modal *ngIf="modalService.isVisible$.value">
     <app-auth-form
-      (authEvent)="authorize($event)"
+      (formEvent)="authorize($event)"
       [isUserNew]="isUserNew"
     ></app-auth-form>
   </app-modal>

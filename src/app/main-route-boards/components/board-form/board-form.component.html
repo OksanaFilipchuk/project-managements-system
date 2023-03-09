@@ -2,13 +2,20 @@
 <form class="form" (submit)="onSubmit()" [formGroup]="boardForm">
   <mat-form-field>
     <mat-label>Board title</mat-label>
-    <input matInput placeholder="Ex. David" formControlName="title" />
+    <input matInput placeholder="New board" formControlName="title" required />
   </mat-form-field>
+  <!-- <mat-form-field>
+    <mat-label>Owner</mat-label>
+    <input
+      matInput
+      formControlName="owner"
+      value="LocalStorage.getItem('login')"
+    />
+  </mat-form-field> -->
   <mat-form-field>
     <mat-label>Add user</mat-label>
-    <input matInput type="string" formControlName="user" />
+    <input matInput type="string" formControlName="users" required />
   </mat-form-field>
-  <!-- <button mat-button color="primaSry" (click)="closeModal()">Close</button> -->
   <button mat-button color="primary" (click)="onClick()">Close</button>
   <button mat-button color="primary" type="submit" value="submitButton">
     Create

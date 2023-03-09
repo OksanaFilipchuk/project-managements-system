@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, Injectable } from '@angular/core';
 // import { ModalServiceService } from '../../services/modal-service.service';
-
+@Injectable()
 @Component({
   selector: 'app-modal',
   templateUrl: './modal.component.html',

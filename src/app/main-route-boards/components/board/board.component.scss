@@ -22,3 +22,8 @@
 .board h2 {
   display: block;
 }
+
+.board h2:hover {
+  cursor: pointer;
+  color: #673ab7;
+}

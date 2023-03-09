@@ -1,6 +1,7 @@
 import { Component, Output, EventEmitter } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { ModalServiceService } from 'src/app/shared/services/modal-service.service';
+import { Board } from '../../models/board.model';
 
 @Component({
   selector: 'app-board-form',
@@ -12,23 +13,19 @@ export class BoardFormComponent {
     private formBuilder: FormBuilder,
     private modalService: ModalServiceService
   ) {}
-  boardForm: FormGroup = this.formBuilder.group({
+  boardForm: FormGroup<any> = this.formBuilder.nonNullable.group({
     title: '',
-    // owner: '',
-    user: [''],
+    owner: localStorage.getItem('login'),
+    users: [],
   });
 
-  closeModal() {
-    this.modalService.close();
-  }
+  @Output() boardEvent = new EventEmitter<FormGroup | 'close'>();
 
   onSubmit() {
-    // console.log(this.authorizingComponent.userLogin);
+    this.boardEvent.emit(this.boardForm);
   }
 
-  @Output() closeEvent = new EventEmitter();
-
   onClick() {
-    this.closeEvent.emit();
+    this.boardEvent.emit('close');
   }
 }

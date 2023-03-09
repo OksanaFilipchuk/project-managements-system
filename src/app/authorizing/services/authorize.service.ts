@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
-import { User } from '../models/models';
+import { User } from 'src/app/shared/models/user.model';
 
 @Injectable({
   providedIn: 'root',
@@ -30,11 +30,13 @@ export class AuthorizeService {
     );
   }
 
-  setToken(token: string) {
+  setToken(token: string, login: string) {
     localStorage.setItem('token', token);
+    localStorage.setItem('login', login);
   }
   removeToken() {
     localStorage.removeItem('token');
+    localStorage.removeItem('login');
   }
 
   getToken() {
@@ -48,10 +50,4 @@ export class AuthorizeService {
   signIn(data: User): Observable<User> {
     return this.http.post<User>(`${this.url}signin`, data);
   }
-
-  //   fetch('http://localhost:3000/auth/signup', {method: "POST", headers:{'accept': 'application/json', 'Content-Type': 'application/json'}, body: JSON.stringify({
-  //   "name": "plo",
-  //   "login": "plo",
-  //   "password": "Tesla4ever"
-  // })}).then(res=>res.json()).then(res=>console.log(res))
 }

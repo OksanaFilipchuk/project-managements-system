@@ -1,11 +1,30 @@
 <div class="container">
-  <h2 class="text-center p-3">Boards</h2>
+  <div class="text-center">
+    <h2 class="d-inline text-center p-3">Boards</h2>
+    <button mat-mini-fab color="primary" (click)="onClick()">
+      <mat-icon>plus_one</mat-icon>
+    </button>
+  </div>
+
   <mat-divider></mat-divider>
   <div class="boards-container">
-    <div class="board" (click)="addNewBoard()">create new board</div>
-    <app-board *ngFor="let board of boards" [board]="board"></app-board>
-    <app-modal *ngIf="modalService.isVisible$.value">
-      <app-board-form (closeEvent)="closeModal()"></app-board-form>
-    </app-modal>
+    <div class="board" (click)="onClick()">create new board</div>
+    <app-board
+      *ngFor="let board of boards"
+      [board]="board"
+      (deleteEvent)="deleteBoard($event)"
+    ></app-board>
   </div>
+
+  <app-modal *ngIf="modalService.isVisible$.value">
+    <app-confirmation
+      *ngIf="confirmVisible"
+      (confirmEvent)="onConfirm($event)"
+      title="Do you want to remove board?"
+    ></app-confirmation>
+    <app-board-form
+      *ngIf="formVisible"
+      (boardEvent)="onBoardEvent($event)"
+    ></app-board-form>
+  </app-modal>
 </div>

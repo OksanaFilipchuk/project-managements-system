@@ -7,11 +7,12 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AuthFormComponent } from './components/auth-form/auth-form.component';
 import { AuthorizeService } from './services/authorize.service';
 import { ModalServiceService } from '../shared/services/modal-service.service';
+import { FilterByLoginPipe } from '../shared/pipes/filter-by-login.pipe';
 
 @NgModule({
   declarations: [AuthorizingComponent, AuthFormComponent],
   imports: [CommonModule, SharedModule, FormsModule, ReactiveFormsModule],
   exports: [AuthorizingComponent],
-  providers: [AuthorizeService, ModalServiceService],
+  providers: [AuthorizeService, ModalServiceService, FilterByLoginPipe],
 })
 export class AuthorizingModule {}

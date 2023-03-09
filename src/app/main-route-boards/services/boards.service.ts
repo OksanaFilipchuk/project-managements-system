@@ -9,13 +9,17 @@ import { Board } from '../models/board.model';
 export class BoardsService {
   private url = 'http://localhost:3000/boards';
 
-  constructor(private httpClient: HttpClient) {}
+  constructor(private http: HttpClient) {}
 
   getBoards(): Observable<Board[]> {
-    return this.httpClient.get<Board[]>(this.url);
+    return this.http.get<Board[]>(this.url);
   }
 
   addBoard(board: Board): Observable<Board[]> {
-    return this.httpClient.post<Board[]>(this.url, board);
+    return this.http.post<Board[]>(this.url, board);
+  }
+
+  deleteBoard(board: Board) {
+    return this.http.delete<Board[]>(`${this.url}/${board._id}`);
   }
 }
