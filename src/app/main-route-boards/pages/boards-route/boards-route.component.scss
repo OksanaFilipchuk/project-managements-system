@@ -1,5 +1,6 @@
 .board {
   width: 250px;
+  min-width: 250px;
   min-height: 150px;
   background-color: transparent;
   border-radius: 10px;
@@ -11,9 +12,11 @@
 
 .boards-container {
   display: flex;
+  flex-wrap: wrap;
   gap: 10px;
   padding: 10px;
 }
+
 button {
   margin-top: -50px;
   margin-right: -20px;

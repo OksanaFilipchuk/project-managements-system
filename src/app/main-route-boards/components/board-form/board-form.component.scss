@@ -1,0 +1,22 @@
+:host ::ng-deep .multiselect-dropdown {
+  display: inline-block;
+  border: none;
+  width: 100%;
+  padding: 6px 12px;
+  margin-bottom: 0;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.1;
+  text-align: left;
+  vertical-align: middle;
+  cursor: pointer;
+  background-color: white;
+  color: grey;
+  border-radius: 4px;
+  margin-bottom: 20px;
+}
+
+button {
+  font-size: 18px;
+  margin: 5px;
+}

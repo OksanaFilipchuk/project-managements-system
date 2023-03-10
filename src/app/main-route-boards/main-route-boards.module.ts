@@ -7,6 +7,9 @@ import { BoardsService } from './services/boards.service';
 import { BoardFormComponent } from './components/board-form/board-form.component';
 import { SharedModule } from '../shared/shared.module';
 import { ModalServiceService } from '../shared/services/modal-service.service';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatSelectModule } from '@angular/material/select';
+import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 
 @NgModule({
   declarations: [
@@ -15,7 +18,14 @@ import { ModalServiceService } from '../shared/services/modal-service.service';
     BoardsRouteComponent,
     BoardFormComponent,
   ],
-  imports: [CommonModule, SharedModule],
+  imports: [
+    CommonModule,
+    SharedModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatSelectModule,
+    NgMultiSelectDropDownModule.forRoot(),
+  ],
   providers: [BoardsService, ModalServiceService],
   exports: [BoardsRouteComponent, NewBoardComponent],
 })

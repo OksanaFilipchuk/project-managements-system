@@ -42,7 +42,7 @@ export class BoardsRouteComponent implements OnInit {
     this.formVisible = true;
   }
 
-  onBoardEvent(data: any) {
+  onNewBoardEvent(data: any) {
     if (data != 'close') {
       this.boardsService.addBoard(data).subscribe((res) => this.getBoards());
     }
