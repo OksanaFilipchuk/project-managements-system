@@ -1,29 +1,19 @@
-.board {
-  position: relative;
-  width: 250px;
-  min-height: 150px;
-  background-color: rgba(211, 209, 209, 0.45);
-  border-radius: 10px;
-  box-shadow: 3px 3px 3px;
+h3 {
+  font-size: 24px;
+  text-align: center;
+}
+.newColumn {
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  color: blueviolet;
+  font-style: italic;
   justify-content: center;
-}
-
-.board button {
-  width: 40px;
-  height: 40px;
-  position: absolute;
-  bottom: 6px;
-  right: 10px;
-}
-.board h3,
-.board h2 {
-  display: block;
-}
-
-.board h2:hover {
-  cursor: pointer;
-  color: #673ab7;
+  border: 2px dotted;
+  border-radius: 5px;
+  width: 150px;
+  height: 30px;
+  transition: all ease-in-out 500px;
+  &:hover {
+    cursor: pointer;
+    height: 70px;
+  }
 }

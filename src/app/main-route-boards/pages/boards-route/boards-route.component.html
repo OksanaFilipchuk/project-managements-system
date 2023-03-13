@@ -9,11 +9,11 @@
   <mat-divider></mat-divider>
   <div class="boards-container">
     <div class="board" (click)="onClick()">create new board</div>
-    <app-board
+    <app-board-icon
       *ngFor="let board of boards"
       [board]="board"
       (deleteEvent)="deleteBoard($event)"
-    ></app-board>
+    ></app-board-icon>
   </div>
 
   <app-modal *ngIf="modalService.isVisible$.value">

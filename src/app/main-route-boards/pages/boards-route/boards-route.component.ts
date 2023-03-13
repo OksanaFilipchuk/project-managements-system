@@ -11,7 +11,7 @@ import { FormGroup } from '@angular/forms';
   providers: [ModalServiceService],
 })
 export class BoardsRouteComponent implements OnInit {
-  boards: Board[] = [];
+  boards: Board[];
   confirmVisible = false;
   formVisible = false;
   boardToRemove: Board | null = null;
@@ -22,13 +22,16 @@ export class BoardsRouteComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.boardsService.saveBoards();
     this.getBoards();
   }
 
   getBoards() {
-    this.boardsService
-      .getBoards()
-      .subscribe((boards) => (this.boards = boards));
+    this.boards = this.boardsService.getBoards();
+
+    // this.boardsService
+    //   .loadBoards()
+    //   .subscribe((boards) => (this.boards = boards));
   }
 
   deleteBoard(board: Board) {
@@ -44,7 +47,10 @@ export class BoardsRouteComponent implements OnInit {
 
   onNewBoardEvent(data: any) {
     if (data != 'close') {
-      this.boardsService.addBoard(data).subscribe((res) => this.getBoards());
+      this.boardsService.addBoard(data).subscribe((res) => {
+        this.boardsService.saveBoards();
+        this.getBoards();
+      });
     }
     this.modalService.close();
     this.formVisible = false;
@@ -52,9 +58,10 @@ export class BoardsRouteComponent implements OnInit {
 
   onConfirm(event: boolean) {
     if (event && this.boardToRemove) {
-      this.boardsService
-        .deleteBoard(this.boardToRemove)
-        .subscribe((res) => this.getBoards());
+      this.boardsService.deleteBoard(this.boardToRemove).subscribe((res) => {
+        this.boardsService.saveBoards();
+        this.getBoards();
+      });
     }
     this.modalService.close();
     this.confirmVisible = false;

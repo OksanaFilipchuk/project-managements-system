@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { BoardRouteComponent } from './board-route.component';
+import { BoardIconComponent } from './board-icon.component';
 
-describe('BoardRouteComponent', () => {
-  let component: BoardRouteComponent;
-  let fixture: ComponentFixture<BoardRouteComponent>;
+describe('BoardIconComponent', () => {
+  let component: BoardIconComponent;
+  let fixture: ComponentFixture<BoardIconComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ BoardRouteComponent ]
+      declarations: [ BoardIconComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(BoardRouteComponent);
+    fixture = TestBed.createComponent(BoardIconComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

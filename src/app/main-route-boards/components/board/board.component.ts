@@ -1,46 +1,84 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { Board } from '../../models/board.model';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { ModalServiceService } from 'src/app/shared/services/modal-service.service';
+import { Board } from '../../models/board.model';
+import { Column } from '../../models/column.model';
 import { BoardsService } from '../../services/boards.service';
+import { ColumnsService } from '../../services/columns.service';
 
 @Component({
   selector: 'app-board',
   templateUrl: './board.component.html',
   styleUrls: ['./board.component.scss'],
+  providers: [ModalServiceService],
 })
-export class BoardComponent {
-  @Input() board: Board = {
+export class BoardComponent implements OnInit {
+  board: Board = {
     _id: '',
-    title: '',
     owner: '',
-    users: ['', ''],
+    title: '',
+    users: [],
   };
-  @Output() deleteEvent = new EventEmitter<Board>();
-  @Output() goToBoardEvent = new EventEmitter<Board>();
+  columns: Column[] = [
+    {
+      _id: '',
+      title: '',
+      order: 0,
+      boardId: '',
+    },
+  ];
 
   constructor(
     private router: Router,
-    public modalService: ModalServiceService,
-    private boardsService: BoardsService
+    private route: ActivatedRoute,
+    private boardService: BoardsService,
+    private columnService: ColumnsService,
+    public modalService: ModalServiceService
   ) {}
 
-  goToBoard() {
-    this.goToBoardEvent.emit(this.board);
+  ngOnInit(): void {
+    this.boardService.loadBoards().subscribe((boards) => {
+      const currentBoard = boards.filter(
+        (el) => el._id === this.route.snapshot.params['id']
+      )[0];
+      this.board = {
+        _id: currentBoard._id,
+        owner: currentBoard.owner,
+        title: currentBoard.title,
+        users: currentBoard.users,
+      };
+      if (currentBoard._id) {
+        this.columnService
+          .loadColumns(currentBoard._id)
+          .subscribe((res) => (this.columns = res));
+      }
+    });
   }
 
-  onClick() {
-    this.deleteEvent.emit(this.board);
+  goToBoards() {
+    this.router.navigate(['Boards']);
   }
 
-  // confirmHandle(value: boolean) {
-  //   if (!value) {
-  //     this.modalService.close();
-  //   } else {
-  //     this.boardsService.deleteBoard(this.board).subscribe((res) => {
-  //       this.deleteEvent.emit(this.board);
-  //       console.log(res);
-  //     });
-  //   }
-  // }
+  openColumnForm() {
+    this.modalService.open();
+  }
+
+  onColumnFormEvent(data: 'close' | { title: string }) {
+    if (data !== 'close') {
+      const lastIndex = this.columns.length
+        ? this.columns.sort((a, b) => a.order - b.order)[
+            this.columns.length - 1
+          ].order
+        : 0;
+      this.columnService
+        .addColumn(this.board._id, { ...data, ...{ order: lastIndex + 1 } })
+        .subscribe(() =>
+          this.columnService
+            .loadColumns(this.board._id)
+            .subscribe((res) => (this.columns = res))
+        );
+    }
+    this.modalService.close();
+  }
 }

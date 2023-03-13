@@ -7,12 +7,18 @@ import { Board } from '../models/board.model';
   providedIn: 'root',
 })
 export class BoardsService {
+  boards: Board[];
+
   private url = 'http://localhost:3000/boards';
 
   constructor(private http: HttpClient) {}
 
-  getBoards(): Observable<Board[]> {
+  loadBoards(): Observable<Board[]> {
     return this.http.get<Board[]>(this.url);
+  }
+
+  getBoards() {
+    return this.boards;
   }
 
   addBoard(board: Board): Observable<Board[]> {
@@ -21,5 +27,9 @@ export class BoardsService {
 
   deleteBoard(board: Board) {
     return this.http.delete<Board[]>(`${this.url}/${board._id}`);
+  }
+
+  saveBoards() {
+    this.loadBoards().subscribe((boards) => (this.boards = boards));
   }
 }

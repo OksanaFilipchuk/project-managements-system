@@ -10,6 +10,10 @@ import { ModalServiceService } from '../shared/services/modal-service.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
+import { MainRouteBoardsRoutingModule } from './main-route-boards-routing.module';
+import { BoardIconComponent } from './components/board-icon/board-icon.component';
+import { ColumnFormComponent } from './components/column-form/column-form.component';
+import { ColumnComponent } from './components/column/column.component';
 
 @NgModule({
   declarations: [
@@ -17,6 +21,9 @@ import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
     BoardComponent,
     BoardsRouteComponent,
     BoardFormComponent,
+    BoardIconComponent,
+    ColumnFormComponent,
+    ColumnComponent,
   ],
   imports: [
     CommonModule,
@@ -25,6 +32,7 @@ import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
     ReactiveFormsModule,
     MatSelectModule,
     NgMultiSelectDropDownModule.forRoot(),
+    MainRouteBoardsRoutingModule,
   ],
   providers: [BoardsService, ModalServiceService],
   exports: [BoardsRouteComponent, NewBoardComponent],

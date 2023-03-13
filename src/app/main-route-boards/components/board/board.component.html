@@ -1,14 +1,16 @@
-<div class="board">
-  <h2 (click)="goToBoard()">{{ board.title }}</h2>
-  <h3>Owner: {{ board.owner }}</h3>
-  <button mat-fab color="primary" (click)="onClick()">
-    <mat-icon>delete</mat-icon>
+<div class="container">
+  <button mat-mini-fab color="grey" (click)="goToBoards()">
+    <mat-icon>arrow_left</mat-icon>
   </button>
-  <!-- <app-modal *ngIf="modalService.isVisible$.value">
-    <app-confirmation
-      *ngIf="modalService.isVisible$.value"
-      title="Do you want to remove board?"
-      (confirmEvent)="confirmHandle($event)"
-    ></app-confirmation>
-  </app-modal> -->
+  <h3>{{ board.title }}</h3>
+  <mat-divider></mat-divider>
+  <div class="column-wrapper">
+    <div class="newColumn" (click)="openColumnForm()">add new column</div>
+    <app-column *ngFor="let column of columns" [column]="column"></app-column>
+  </div>
+  <app-modal *ngIf="modalService.isVisible$.value">
+    <app-column-form
+      (columnFormEvent)="onColumnFormEvent($event)"
+    ></app-column-form>
+  </app-modal>
 </div>

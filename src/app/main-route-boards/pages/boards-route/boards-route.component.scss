@@ -8,6 +8,11 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: ease-in-out 200ms;
+  &:hover {
+    cursor: pointer;
+    background-color: rgb(238, 233, 233, 0.5);
+  }
 }
 
 .boards-container {
