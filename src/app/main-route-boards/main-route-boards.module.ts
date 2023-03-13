@@ -14,6 +14,7 @@ import { MainRouteBoardsRoutingModule } from './main-route-boards-routing.module
 import { BoardIconComponent } from './components/board-icon/board-icon.component';
 import { ColumnFormComponent } from './components/column-form/column-form.component';
 import { ColumnComponent } from './components/column/column.component';
+import { TaskComponent } from './components/task/task.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { ColumnComponent } from './components/column/column.component';
     BoardIconComponent,
     ColumnFormComponent,
     ColumnComponent,
+    TaskComponent,
   ],
   imports: [
     CommonModule,

@@ -1,1 +1,26 @@
-<div class="column">{{ column.title }}</div>
+<div class="column">
+  <h2>{{ column.title }}</h2>
+  <mat-divider></mat-divider>
+  <app-task *ngFor="let task of tasks" [task]="task"></app-task>
+  <button mat-mini-fab color="grey" class="deleteBtn" (click)="onClickDelete()">
+    <mat-icon>delete</mat-icon>
+  </button>
+  <button mat-mini-fab color="grey" class="editBtn" (click)="onClickEdit()">
+    <mat-icon>edit</mat-icon>
+  </button>
+</div>
+
+<app-modal *ngIf="modalService.isVisible$.value">
+  <app-confirmation
+    *ngIf="confirmIsVisible"
+    title="Do you want to remove column?"
+    (confirmEvent)="onConfirmEvent($event)"
+  ></app-confirmation>
+  <app-column-form
+    *ngIf="editIsVisible"
+    title="Edit column"
+    submitButton="Edit"
+    [currentTitle]="column.title"
+    (columnFormEvent)="onColumnFormEvent($event)"
+  ></app-column-form>
+</app-modal>

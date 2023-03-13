@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormControl, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
@@ -7,17 +7,20 @@ import { FormControl, FormBuilder, Validators } from '@angular/forms';
   styleUrls: ['./column-form.component.scss'],
 })
 export class ColumnFormComponent {
+  @Input() title: string;
+  @Input() submitButton: string;
+  @Input() currentTitle?: string;
   constructor(private fb: FormBuilder) {}
 
-  newColumnForm = this.fb.group({
+  columnForm = this.fb.group({
     title: new FormControl('', [Validators.required, Validators.minLength(3)]),
   });
 
   getErrorMessage(): any {
-    if (this.newColumnForm.get('title')?.hasError('required')) {
+    if (this.columnForm.get('title')?.hasError('required')) {
       return 'You must enter a value';
     }
-    if (this.newColumnForm.get('title')?.errors?.['minLength']) {
+    if (this.columnForm.get('title')?.errors?.['minLength']) {
       return 'The title must be at least 3 characters”';
     }
   }
@@ -29,6 +32,6 @@ export class ColumnFormComponent {
   }
 
   onSubmit() {
-    this.columnFormEvent.emit(this.newColumnForm.value);
+    this.columnFormEvent.emit(this.columnForm.value);
   }
 }

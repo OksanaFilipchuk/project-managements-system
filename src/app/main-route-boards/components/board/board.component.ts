@@ -48,11 +48,11 @@ export class BoardComponent implements OnInit {
         title: currentBoard.title,
         users: currentBoard.users,
       };
-      if (currentBoard._id) {
-        this.columnService
-          .loadColumns(currentBoard._id)
-          .subscribe((res) => (this.columns = res));
-      }
+      // if (currentBoard._id) {
+      this.columnService
+        .loadColumns(currentBoard._id)
+        .subscribe((res) => (this.columns = res));
+      // }
     });
   }
 
@@ -80,5 +80,10 @@ export class BoardComponent implements OnInit {
         );
     }
     this.modalService.close();
+  }
+  onColumnEvent() {
+    this.columnService
+      .loadColumns(this.board._id)
+      .subscribe((res) => (this.columns = res));
   }
 }

@@ -10,6 +10,7 @@ export class ColumnsService {
   columns: Column[];
 
   private url = 'http://localhost:3000/boards';
+
   getUrl(boardId: string) {
     return `${this.url}/${boardId}/columns`;
   }
@@ -20,19 +21,18 @@ export class ColumnsService {
     return this.http.get<Column[]>(this.getUrl(boardId));
   }
 
-  // getColumns() {
-  //   return this.boards;
-  // }
-
-  addColumn(boardId: string, column: Partial<Column>): Observable<Column[]> {
-    return this.http.post<Column[]>(this.getUrl(boardId), column);
+  addColumn(boardId: string, column: Partial<Column>): Observable<Column> {
+    return this.http.post<Column>(this.getUrl(boardId), column);
   }
 
-  deleteBoard(board: Column) {
-    return this.http.delete<Column[]>(`${this.url}/${board._id}`);
+  deleteColumn(boardId: string, column: Partial<Column>): Observable<Column> {
+    return this.http.delete<Column>(`${this.getUrl(boardId)}/${column._id}`);
   }
 
-  // saveBoards() {
-  //   this.loadColumns().subscribe((columns) => (this.columns = columns));
-  // }
+  editColumn(boardId: string, column: Partial<Column>): Observable<Column> {
+    return this.http.put<Column>(
+      `${this.getUrl(boardId)}/${column._id}`,
+      column
+    );
+  }
 }

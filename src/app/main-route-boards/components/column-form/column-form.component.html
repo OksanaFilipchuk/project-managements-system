@@ -1,13 +1,18 @@
-<h2 class="text-center">Create new column</h2>
-<form class="form" (submit)="onSubmit()" [formGroup]="newColumnForm">
+<h2 class="text-center">{{ title }}</h2>
+<form class="form" (submit)="onSubmit()" [formGroup]="columnForm">
   <mat-form-field appearance="fill">
     <mat-label>Column title</mat-label>
-    <input formControlName="title" matInput placeholder="New column" />
-    <mat-error *ngIf="newColumnForm.invalid">{{ getErrorMessage() }}</mat-error>
+    <input
+      formControlName="title"
+      matInput
+      placeholder="New column"
+      [value]="currentTitle"
+    />
+    <mat-error *ngIf="columnForm.invalid">{{ getErrorMessage() }}</mat-error>
   </mat-form-field>
 
   <button mat-button (click)="closeModal()">Close</button>
-  <button mat-button type="submit" [disabled]="!newColumnForm.valid">
-    Create new
+  <button mat-button type="submit" [disabled]="!columnForm.valid">
+    {{ submitButton }}
   </button>
 </form>

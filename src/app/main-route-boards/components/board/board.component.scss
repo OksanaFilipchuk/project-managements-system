@@ -2,18 +2,8 @@ h3 {
   font-size: 24px;
   text-align: center;
 }
-.newColumn {
+.column-wrapper {
   display: flex;
-  color: blueviolet;
-  font-style: italic;
-  justify-content: center;
-  border: 2px dotted;
-  border-radius: 5px;
-  width: 150px;
-  height: 30px;
-  transition: all ease-in-out 500px;
-  &:hover {
-    cursor: pointer;
-    height: 70px;
-  }
+  flex-wrap: wrap;
+  gap: 5px;
 }

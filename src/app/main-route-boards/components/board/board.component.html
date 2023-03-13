@@ -3,13 +3,24 @@
     <mat-icon>arrow_left</mat-icon>
   </button>
   <h3>{{ board.title }}</h3>
+
   <mat-divider></mat-divider>
-  <div class="column-wrapper">
-    <div class="newColumn" (click)="openColumnForm()">add new column</div>
-    <app-column *ngFor="let column of columns" [column]="column"></app-column>
+  <button mat-mini-fab color="grey" (click)="openColumnForm()">
+    <mat-icon>plus_one</mat-icon>
+  </button>
+  <div class="column-wrapper" *ngIf="columns">
+    <app-column
+      *ngFor="let column of columns"
+      [column]="column"
+      [board]="board"
+      (columnEvent)="onColumnEvent()"
+    ></app-column>
   </div>
+
   <app-modal *ngIf="modalService.isVisible$.value">
     <app-column-form
+      title="Create new column"
+      submitButton="Create"
       (columnFormEvent)="onColumnFormEvent($event)"
     ></app-column-form>
   </app-modal>

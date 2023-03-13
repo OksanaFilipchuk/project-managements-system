@@ -17,7 +17,7 @@ export class BoardsService {
     return this.http.get<Board[]>(this.url);
   }
 
-  getBoards() {
+  getBoards(): Board[] {
     return this.boards;
   }
 

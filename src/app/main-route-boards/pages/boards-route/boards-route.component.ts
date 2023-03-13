@@ -23,7 +23,7 @@ export class BoardsRouteComponent implements OnInit {
 
   ngOnInit(): void {
     this.boardsService.saveBoards();
-    this.getBoards();
+    this.boardsService.loadBoards().subscribe((res) => (this.boards = res));
   }
 
   getBoards() {
@@ -58,9 +58,8 @@ export class BoardsRouteComponent implements OnInit {
 
   onConfirm(event: boolean) {
     if (event && this.boardToRemove) {
-      this.boardsService.deleteBoard(this.boardToRemove).subscribe((res) => {
-        this.boardsService.saveBoards();
-        this.getBoards();
+      this.boardsService.deleteBoard(this.boardToRemove).subscribe(() => {
+        this.boardsService.loadBoards().subscribe((res) => (this.boards = res));
       });
     }
     this.modalService.close();
