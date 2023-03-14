@@ -1,9 +1,23 @@
 h3 {
   font-size: 24px;
-  text-align: center;
+  display: inline;
 }
 .column-wrapper {
   display: flex;
+  justify-content: space-between;
   flex-wrap: wrap;
   gap: 5px;
+  margin-bottom: 5px;
+  @media screen and (max-width: 525px) {
+    justify-content: center;
+  }
+}
+.back-button {
+  margin-top: 15px;
+  &:hover {
+    cursor: pointer;
+  }
+}
+.add-column {
+  margin: 10px;
 }

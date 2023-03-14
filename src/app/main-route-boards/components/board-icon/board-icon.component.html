@@ -1,5 +1,5 @@
 <div class="board">
-  <h2 (click)="goToBoard()">{{ board.title }}</h2>
+  <h2 (click)="goToBoard()">{{ board.title | titlecase }}</h2>
   <h3>Owner: {{ board.owner }}</h3>
   <button mat-fab color="primary" (click)="onClick()">
     <mat-icon>delete</mat-icon>

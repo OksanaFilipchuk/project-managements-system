@@ -1,12 +1,16 @@
 <div class="container">
-  <button mat-mini-fab color="grey" (click)="goToBoards()">
-    <mat-icon>arrow_left</mat-icon>
-  </button>
-  <h3>{{ board.title }}</h3>
-
+  <mat-icon class="back-button" color="grey" (click)="goToBoards()"
+    >arrow_left</mat-icon
+  >
+  <h3>{{ board.title | titlecase }}</h3>
   <mat-divider></mat-divider>
-  <button mat-mini-fab color="grey" (click)="openColumnForm()">
-    <mat-icon>plus_one</mat-icon>
+  <button
+    mat-stroked-button
+    color="warn"
+    class="add-column"
+    (click)="openColumnForm()"
+  >
+    + add column
   </button>
   <div class="column-wrapper" *ngIf="columns">
     <app-column

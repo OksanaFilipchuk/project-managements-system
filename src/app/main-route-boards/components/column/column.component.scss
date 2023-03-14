@@ -1,12 +1,11 @@
 .column {
   position: relative;
-  width: 260px;
-  height: 200px;
+  width: 240px;
+  height: 300px;
   padding-bottom: 40px;
   border-radius: 5px;
   background-color: rgba(76, 39, 179, 0.2);
   border: 1px solid rgba(76, 39, 179, 0.8);
-  overflow-y: auto;
 }
 h2 {
   text-align: center;
@@ -21,4 +20,11 @@ h2 {
   position: absolute;
   right: 20px;
   bottom: 5px;
+}
+
+.newTaskBtn {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 8px;
 }

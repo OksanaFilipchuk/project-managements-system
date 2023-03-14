@@ -5,6 +5,6 @@ export interface Task {
   boardId: string;
   columnId: string;
   description: string;
-  userId: string;
+  userId: number;
   users: string[];
 }

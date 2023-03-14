@@ -8,4 +8,7 @@ import { Task } from '../../models/task.model';
 })
 export class TaskComponent {
   @Input() task: Task;
+  onClickDelete() {
+    console.log('del');
+  }
 }

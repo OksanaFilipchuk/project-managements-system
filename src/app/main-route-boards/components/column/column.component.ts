@@ -32,7 +32,7 @@ export class ColumnComponent implements OnInit {
       boardId: '',
       columnId: '',
       description: '',
-      userId: '',
+      userId: 0,
       users: [],
     },
   ];
@@ -44,12 +44,15 @@ export class ColumnComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.tasksService
-      .loadTasks(this.board._id, this.column._id)
-      .subscribe((res) => (this.tasks = res));
+    if (this.board._id && this.column._id) {
+      this.tasksService
+        .loadTasks(this.board._id, this.column._id)
+        .subscribe((res) => (this.tasks = res));
+    }
   }
   confirmIsVisible = false;
   editIsVisible = false;
+  newTaskFormIsVisible = false;
 
   onClickDelete() {
     this.modalService.open();
@@ -60,17 +63,18 @@ export class ColumnComponent implements OnInit {
     this.editIsVisible = true;
   }
 
+  onClickNewTask() {
+    this.modalService.open();
+    this.newTaskFormIsVisible = true;
+  }
+
   onColumnFormEvent(data: 'close' | { title: string }) {
     if (data !== 'close') {
       this.columnService
-        .editColumn(this.board._id, {
-          ...data,
-          ...{ order: this.column.order },
-        })
+        .editColumn(this.board._id, { ...this.column, ...data })
         .subscribe((res) => (this.column = res));
     }
     this.editIsVisible = false;
-    this.confirmIsVisible = false;
     this.modalService.close();
   }
 
@@ -80,5 +84,32 @@ export class ColumnComponent implements OnInit {
         .deleteColumn(this.board._id, this.column)
         .subscribe(() => this.columnEvent.emit());
     }
+    this.modalService.close();
+    this.confirmIsVisible = false;
+  }
+
+  onTaskFormEvent(data: 'close' | Partial<Task>) {
+    if (data != 'close') {
+      const lastOrder = this.tasks.length
+        ? this.tasks.sort((a, b) => a.order - b.order)[this.tasks.length - 1]
+            .order
+        : 0;
+      this.tasksService
+        .addTask(this.board._id, this.column._id, {
+          ...{
+            order: lastOrder + 1,
+            userId: 0,
+            users: this.board.users,
+          },
+          ...data,
+        })
+        .subscribe((res) =>
+          this.tasksService
+            .loadTasks(this.board._id, this.column._id)
+            .subscribe((res) => (this.tasks = res))
+        );
+    }
+    this.modalService.close();
+    this.newTaskFormIsVisible = false;
   }
 }

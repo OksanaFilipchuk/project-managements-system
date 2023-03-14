@@ -48,11 +48,9 @@ export class BoardComponent implements OnInit {
         title: currentBoard.title,
         users: currentBoard.users,
       };
-      // if (currentBoard._id) {
       this.columnService
         .loadColumns(currentBoard._id)
         .subscribe((res) => (this.columns = res));
-      // }
     });
   }
 
@@ -66,13 +64,13 @@ export class BoardComponent implements OnInit {
 
   onColumnFormEvent(data: 'close' | { title: string }) {
     if (data !== 'close') {
-      const lastIndex = this.columns.length
+      const lastOrder = this.columns.length
         ? this.columns.sort((a, b) => a.order - b.order)[
             this.columns.length - 1
           ].order
         : 0;
       this.columnService
-        .addColumn(this.board._id, { ...data, ...{ order: lastIndex + 1 } })
+        .addColumn(this.board._id, { ...data, ...{ order: lastOrder + 1 } })
         .subscribe(() =>
           this.columnService
             .loadColumns(this.board._id)

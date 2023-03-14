@@ -15,6 +15,7 @@ import { BoardIconComponent } from './components/board-icon/board-icon.component
 import { ColumnFormComponent } from './components/column-form/column-form.component';
 import { ColumnComponent } from './components/column/column.component';
 import { TaskComponent } from './components/task/task.component';
+import { TaskFormComponent } from './components/task-form/task-form.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { TaskComponent } from './components/task/task.component';
     ColumnFormComponent,
     ColumnComponent,
     TaskComponent,
+    TaskFormComponent,
   ],
   imports: [
     CommonModule,

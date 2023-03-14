@@ -1,5 +1,5 @@
 <div class="column">
-  <h2>{{ column.title }}</h2>
+  <h2>{{ column.title | titlecase }}</h2>
   <mat-divider></mat-divider>
   <app-task *ngFor="let task of tasks" [task]="task"></app-task>
   <button mat-mini-fab color="grey" class="deleteBtn" (click)="onClickDelete()">
@@ -7,6 +7,15 @@
   </button>
   <button mat-mini-fab color="grey" class="editBtn" (click)="onClickEdit()">
     <mat-icon>edit</mat-icon>
+  </button>
+  <button
+    mat-button
+    color="grey"
+    class="newTaskBtn"
+    color="warn"
+    (click)="onClickNewTask()"
+  >
+    + add task
   </button>
 </div>
 
@@ -23,4 +32,8 @@
     [currentTitle]="column.title"
     (columnFormEvent)="onColumnFormEvent($event)"
   ></app-column-form>
+  <app-task-form
+    *ngIf="newTaskFormIsVisible"
+    (taskFormEvent)="onTaskFormEvent($event)"
+  ></app-task-form>
 </app-modal>

@@ -1,4 +1,4 @@
-<h2 class="text-center">{{ title }}</h2>
+<h2 class="text-center">{{ title | titlecase }}</h2>
 <form class="form" (submit)="onSubmit()" [formGroup]="columnForm">
   <mat-form-field appearance="fill">
     <mat-label>Column title</mat-label>

@@ -30,9 +30,9 @@ export class ColumnsService {
   }
 
   editColumn(boardId: string, column: Partial<Column>): Observable<Column> {
-    return this.http.put<Column>(
-      `${this.getUrl(boardId)}/${column._id}`,
-      column
-    );
+    return this.http.put<Column>(`${this.getUrl(boardId)}/${column._id}`, {
+      title: column.title,
+      order: column.order,
+    });
   }
 }

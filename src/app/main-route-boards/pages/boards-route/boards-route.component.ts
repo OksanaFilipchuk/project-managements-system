@@ -47,9 +47,8 @@ export class BoardsRouteComponent implements OnInit {
 
   onNewBoardEvent(data: any) {
     if (data != 'close') {
-      this.boardsService.addBoard(data).subscribe((res) => {
-        this.boardsService.saveBoards();
-        this.getBoards();
+      this.boardsService.addBoard(data).subscribe(() => {
+        this.boardsService.loadBoards().subscribe((res) => (this.boards = res));
       });
     }
     this.modalService.close();
@@ -66,8 +65,4 @@ export class BoardsRouteComponent implements OnInit {
     this.confirmVisible = false;
     this.boardToRemove = null;
   }
-
-  // closeModal() {
-  //   this.modalService.close();
-  // }
 }
