@@ -13,32 +13,24 @@ export class TaskFormComponent {
     title: new FormControl('', [
       Validators.required,
       Validators.minLength(3),
-      Validators.maxLength(12),
+      Validators.maxLength(20),
     ]),
-    description: new FormControl('', [
-      Validators.required,
-      Validators.minLength(3),
-    ]),
+    description: new FormControl('', [Validators.maxLength(25)]),
   });
 
   getTitleErrorMessage(): any {
     if (this.taskForm.get('title')?.hasError('required')) {
       return 'You must enter a value';
     }
-    if (this.taskForm.get('title')?.errors?.['minLength']) {
+    if (this.taskForm.controls['title'].errors?.['minlength']) {
       return 'The title must be at least 3 characters';
     }
-    if (this.taskForm.get('title')?.errors?.['maxLength']) {
-      return 'Keep the titles under 12 characters';
+    if (this.taskForm.controls['title'].errors?.['maxlength']) {
+      return 'Keep the titles under 20 characters';
     }
   }
   getDescriptionErrorMessage(): any {
-    if (this.taskForm.get('description')?.hasError('required')) {
-      return 'You must enter a value';
-    }
-    if (this.taskForm.get('description')?.errors?.['minLength']) {
-      return 'The description must be at least 3 characters';
-    }
+    return 'Keep the description under 25 characters';
   }
 
   @Output() taskFormEvent = new EventEmitter();

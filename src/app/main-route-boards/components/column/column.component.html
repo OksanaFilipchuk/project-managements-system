@@ -1,7 +1,10 @@
 <div class="column">
   <h2>{{ column.title | titlecase }}</h2>
   <mat-divider></mat-divider>
-  <app-task *ngFor="let task of tasks" [task]="task"></app-task>
+  <div class="tasks-wrapper">
+    <app-task *ngFor="let task of tasks" [task]="task"></app-task>
+  </div>
+
   <button mat-mini-fab color="grey" class="deleteBtn" (click)="onClickDelete()">
     <mat-icon>delete</mat-icon>
   </button>
