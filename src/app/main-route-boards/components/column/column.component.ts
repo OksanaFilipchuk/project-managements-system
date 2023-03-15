@@ -1,11 +1,4 @@
-import {
-  Component,
-  Input,
-  Output,
-  OnInit,
-  OnChanges,
-  EventEmitter,
-} from '@angular/core';
+import { Component, Input, Output, OnInit, EventEmitter } from '@angular/core';
 import { ModalServiceService } from 'src/app/shared/services/modal-service.service';
 import { Board } from '../../models/board.model';
 import { Column } from '../../models/column.model';
@@ -58,6 +51,7 @@ export class ColumnComponent implements OnInit {
     this.modalService.open();
     this.confirmIsVisible = true;
   }
+
   onClickEdit() {
     this.modalService.open();
     this.editIsVisible = true;
@@ -83,6 +77,13 @@ export class ColumnComponent implements OnInit {
       this.columnService
         .deleteColumn(this.board._id, this.column)
         .subscribe(() => this.columnEvent.emit());
+      this.tasks.forEach((el) =>
+        this.tasksService
+          .deleteTask(this.board._id, this.column._id, el)
+          .subscribe(() => {
+            this.tasks = [];
+          })
+      );
     }
     this.modalService.close();
     this.confirmIsVisible = false;
@@ -103,7 +104,7 @@ export class ColumnComponent implements OnInit {
           },
           ...data,
         })
-        .subscribe((res) =>
+        .subscribe(() =>
           this.tasksService
             .loadTasks(this.board._id, this.column._id)
             .subscribe((res) => (this.tasks = res))
@@ -111,5 +112,11 @@ export class ColumnComponent implements OnInit {
     }
     this.modalService.close();
     this.newTaskFormIsVisible = false;
+  }
+
+  updateTasks() {
+    this.tasksService
+      .loadTasks(this.board._id, this.column._id)
+      .subscribe((res) => (this.tasks = res));
   }
 }

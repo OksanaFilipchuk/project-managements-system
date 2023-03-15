@@ -18,7 +18,6 @@ export class TasksService {
 
   loadTasks(boardId: string, columnId: string): Observable<Task[]> {
     const url = this.getUrl(boardId, columnId);
-    console.log(url);
     return this.http.get<Task[]>(url);
   }
 
