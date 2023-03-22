@@ -7,11 +7,18 @@
   <button *ngIf="token" mat-icon-button color="primary">
     <mat-icon>person icon</mat-icon>
   </button>
-  <button *ngIf="token" mat-button (click)="logout()">Logout</button>
+  <button *ngIf="token" mat-button (click)="openConfirm()">Logout</button>
+
   <app-modal *ngIf="modalService.isVisible$.value">
     <app-auth-form
+      *ngIf="authFormVisible"
       (formEvent)="authorize($event)"
       [isUserNew]="isUserNew"
     ></app-auth-form>
+    <app-confirmation
+      *ngIf="logOutConfirmVisible"
+      title="Do you want to log out?"
+      (confirmEvent)="logout($event)"
+    ></app-confirmation>
   </app-modal>
 </div>
