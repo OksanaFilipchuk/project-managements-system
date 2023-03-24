@@ -41,7 +41,13 @@
   </ng-multiselect-dropdown>
 
   <button mat-button color="primary" (click)="onClick()">Close</button>
-  <button mat-button color="primary" type="submit" value="submitButton">
+  <button
+    mat-button
+    color="primary"
+    type="submit"
+    value="submitButton"
+    [disabled]="title.length < 3"
+  >
     Create
   </button>
 </form>

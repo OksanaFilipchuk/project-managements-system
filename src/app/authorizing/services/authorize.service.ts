@@ -9,6 +9,8 @@ import { User } from 'src/app/shared/models/user.model';
 })
 export class AuthorizeService {
   private url = 'http://localhost:3000/auth/';
+  token = '';
+  login = '';
 
   constructor(private http: HttpClient) {}
 
@@ -33,10 +35,14 @@ export class AuthorizeService {
   setToken(token: string, login: string) {
     localStorage.setItem('token', token);
     localStorage.setItem('login', login);
+    this.token = token;
+    this.login = login;
   }
   removeToken() {
     localStorage.removeItem('token');
     localStorage.removeItem('login');
+    this.token = '';
+    this.login = '';
   }
 
   getToken() {

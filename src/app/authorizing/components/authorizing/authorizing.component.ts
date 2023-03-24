@@ -1,4 +1,5 @@
 import { Component, Output, OnInit, EventEmitter } from '@angular/core';
+import { Router } from '@angular/router';
 import { ModalServiceService } from 'src/app/shared/services/modal-service.service';
 import { User } from 'src/app/shared/models/user.model';
 import { AuthorizeService } from '../../services/authorize.service';
@@ -12,6 +13,14 @@ import { FilterByLoginPipe } from 'src/app/shared/pipes/filter-by-login.pipe';
   providers: [ModalServiceService],
 })
 export class AuthorizingComponent implements OnInit {
+  constructor(
+    public modalService: ModalServiceService,
+    private authorizeService: AuthorizeService,
+    public usersService: UsersService,
+    private filter: FilterByLoginPipe,
+    private route: Router
+  ) {}
+
   token = Boolean(localStorage.getItem('token'));
   isUserNew = true;
   userLogin = localStorage.getItem('login');
@@ -20,13 +29,7 @@ export class AuthorizingComponent implements OnInit {
     : '';
   authFormVisible = false;
   logOutConfirmVisible = false;
-
-  constructor(
-    public modalService: ModalServiceService,
-    private authorizeService: AuthorizeService,
-    public usersService: UsersService,
-    private filter: FilterByLoginPipe
-  ) {}
+  userFormVisible = false;
 
   ngOnInit(): void {
     if (this.token) {
@@ -53,10 +56,6 @@ export class AuthorizingComponent implements OnInit {
     this.authFormVisible = true;
   }
 
-  // closeSingUpForm() {
-  //   this.modalService.close();
-  // }
-
   logout(data: boolean) {
     if (data) {
       this.userName = '';
@@ -70,6 +69,10 @@ export class AuthorizingComponent implements OnInit {
   openConfirm() {
     this.modalService.open();
     this.logOutConfirmVisible = true;
+  }
+
+  showUserForm() {
+    this.route.navigate(['User-Form']);
   }
 
   authorize(data: User | string) {
@@ -87,8 +90,8 @@ export class AuthorizingComponent implements OnInit {
             .subscribe((res) => {
               if (res.token) {
                 this.authorizeService.setToken(res.token, data.login);
-                // this.closeSingUpForm();
                 this.modalService.close();
+                this.authFormVisible = false;
                 this.toggleToken();
                 this.usersService.saveUsers();
                 this.userLogin = data.login;
@@ -104,13 +107,11 @@ export class AuthorizingComponent implements OnInit {
           .subscribe((res) => {
             if (res.token) {
               this.authorizeService.setToken(res.token, data.login);
-              // this.closeSingUpForm();
               this.modalService.close();
+              this.authFormVisible = false;
               this.toggleToken();
               this.usersService.saveUsers();
               this.userLogin = data.login;
-
-              // console.log(this.usersComponent.users);
             }
           });
       }

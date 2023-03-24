@@ -10,9 +10,10 @@
     />
     <mat-error *ngIf="columnForm.invalid">{{ getErrorMessage() }}</mat-error>
   </mat-form-field>
-
-  <button mat-button (click)="closeModal()">Close</button>
-  <button mat-button type="submit" [disabled]="!columnForm.valid">
-    {{ submitButton }}
-  </button>
+  <div>
+    <button mat-button (click)="closeModal()">Close</button>
+    <button mat-button type="submit" [disabled]="!columnForm.valid">
+      {{ submitButton }}
+    </button>
+  </div>
 </form>

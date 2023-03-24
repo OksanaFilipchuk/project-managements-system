@@ -1,19 +1,22 @@
 h3 {
   font-size: 24px;
   display: inline;
+  margin: o;
 }
-.column-wrapper {
+
+.header-wrapper {
   display: flex;
   justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 5px;
-  margin-bottom: 5px;
-  @media screen and (max-width: 525px) {
-    justify-content: center;
-  }
+  align-items: center;
 }
+
+.column-wrapper {
+  max-height: calc(100vh - 100px - 60px - 56px);
+  overflow: auto;
+  white-space: nowrap;
+}
+
 .back-button {
-  margin-top: 15px;
   &:hover {
     cursor: pointer;
   }

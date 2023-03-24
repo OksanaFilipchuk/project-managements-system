@@ -20,7 +20,15 @@ export class UsersService {
     return this.http.get<User[]>(this.url);
   }
 
-  saveUsers() {
+  saveUsers(): void {
     this.loadUsers().subscribe((res) => (this.users = res));
+  }
+
+  editProfile(userId: string, newData: any): Observable<User> {
+    return this.http.put<User>(`${this.url}/${userId}`, newData);
+  }
+
+  deleteProfile(userId: string) {
+    return this.http.delete(`${this.url}/${userId}`);
   }
 }

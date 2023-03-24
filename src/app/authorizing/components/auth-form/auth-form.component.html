@@ -3,10 +3,16 @@
   <mat-form-field *ngIf="isUserNew">
     <mat-label>Name</mat-label>
     <input matInput placeholder="Ex. David" formControlName="name" />
+    <mat-error *ngIf="userForm.controls['name'].errors">{{
+      getErrorMessage("name")
+    }}</mat-error>
   </mat-form-field>
   <mat-form-field>
     <mat-label>Login</mat-label>
     <input matInput placeholder="Ex. David" formControlName="login" />
+    <mat-error *ngIf="userForm.controls['login'].errors">{{
+      getErrorMessage("login")
+    }}</mat-error>
   </mat-form-field>
   <mat-form-field>
     <mat-label>Password</mat-label>
@@ -16,9 +22,24 @@
       placeholder="enter your password"
       formControlName="password"
     />
+    <mat-error *ngIf="userForm.controls['password'].errors">{{
+      getErrorMessage("password")
+    }}</mat-error>
   </mat-form-field>
-  <button mat-button color="primary" (click)="closeModal()">Close</button>
-  <button mat-button color="primary" type="submit" value="submitButton">
-    {{ isUserNew ? "Join" : "Log in" }}
-  </button>
+  <div class="buttons">
+    <button mat-button color="primary" (click)="closeModal()">Close</button>
+    <button
+      mat-button
+      color="primary"
+      type="submit"
+      [disabled]="
+        isUserNew
+          ? !userForm.valid
+          : userForm.controls['password'].invalid ||
+            userForm.controls['login'].invalid
+      "
+    >
+      {{ isUserNew ? "Join" : "Log in" }}
+    </button>
+  </div>
 </form>

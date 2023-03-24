@@ -4,7 +4,12 @@
   </button>
   <button *ngIf="!token" mat-button (click)="showSingUpForm()">Sign up</button>
   <span *ngIf="token">{{ userLogin }}</span>
-  <button *ngIf="token" mat-icon-button color="primary">
+  <button
+    *ngIf="token"
+    mat-icon-button
+    color="primary"
+    (click)="showUserForm()"
+  >
     <mat-icon>person icon</mat-icon>
   </button>
   <button *ngIf="token" mat-button (click)="openConfirm()">Logout</button>

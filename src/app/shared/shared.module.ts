@@ -11,9 +11,15 @@ import { MatDividerModule } from '@angular/material/divider';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ConfirmationComponent } from './components/confirmation/confirmation.component';
 import { FilterByLoginPipe } from './pipes/filter-by-login.pipe';
+import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 
 @NgModule({
-  declarations: [ModalComponent, ConfirmationComponent, FilterByLoginPipe],
+  declarations: [
+    ModalComponent,
+    ConfirmationComponent,
+    FilterByLoginPipe,
+    PageNotFoundComponent,
+  ],
   imports: [
     CommonModule,
     MatIconModule,
@@ -37,6 +43,7 @@ import { FilterByLoginPipe } from './pipes/filter-by-login.pipe';
     MatDividerModule,
     ReactiveFormsModule,
     FilterByLoginPipe,
+    PageNotFoundComponent,
   ],
 })
 export class SharedModule {}
