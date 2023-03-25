@@ -8,6 +8,7 @@
       [boardId]="board._id"
       [columnId]="column._id"
       (deleteTaskEvent)="updateTasks()"
+      (editTaskEvent)="openEditTaskForm($event)"
     ></app-task>
   </div>
 
@@ -42,6 +43,7 @@
     (columnFormEvent)="onColumnFormEvent($event)"
   ></app-column-form>
   <app-task-form
+    [taskFormAction]="taskFormAction"
     *ngIf="newTaskFormIsVisible"
     (taskFormEvent)="onTaskFormEvent($event)"
   ></app-task-form>

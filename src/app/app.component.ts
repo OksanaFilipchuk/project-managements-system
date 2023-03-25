@@ -8,8 +8,15 @@ import { AuthorizeService } from './authorizing/services/authorize.service';
   styleUrls: ['./app.component.scss'],
   providers: [AuthorizeService],
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   constructor(private route: Router) {}
+  ngOnInit(): void {
+    if (localStorage.getItem('token')) {
+      this.route.navigate(['Boards']);
+    } else {
+      this.route.navigate(['Welcome']);
+    }
+  }
 
   navigateTo(event: any) {
     if (event.token) {

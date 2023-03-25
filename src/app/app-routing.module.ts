@@ -6,6 +6,10 @@ import { UserFormComponent } from './authorizing/components/user-form/user-form.
 import { PageNotFoundComponent } from './shared/components/page-not-found/page-not-found.component';
 
 const routes: Routes = [
+  {
+    path: 'specialtyQs',
+    component: WelcomeRouteComponent,
+  },
   { path: '', redirectTo: 'Welcome', pathMatch: 'full' },
   { path: 'Welcome', component: WelcomeRouteComponent },
   { path: 'Boards', component: BoardsRouteComponent },

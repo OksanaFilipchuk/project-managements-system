@@ -1,6 +1,6 @@
 <div class="task">
-  <div class="task-title-wrapper">
-    <h4>{{ task.title | titlecase }}</h4>
+  <div class="task-title-wrapper" (click)="showEditTaskForm()">
+    <h4 class="task-title">{{ task.title | titlecase }}</h4>
     <h5>{{ task.description }}</h5>
   </div>
   <mat-icon (click)="onClickDelete()">delete</mat-icon>

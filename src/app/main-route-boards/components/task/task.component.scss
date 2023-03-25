@@ -23,6 +23,9 @@ h5 {
 }
 h4 {
   font-weight: 500;
+  &:hover {
+    cursor: pointer;
+  }
 }
 
 mat-icon {

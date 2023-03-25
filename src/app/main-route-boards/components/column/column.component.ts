@@ -1,5 +1,6 @@
 import { Component, Input, Output, OnInit, EventEmitter } from '@angular/core';
 import { ModalServiceService } from 'src/app/shared/services/modal-service.service';
+import { UsersService } from 'src/app/shared/services/users.service';
 import { Board } from '../../models/board.model';
 import { Column } from '../../models/column.model';
 import { Task } from '../../models/task.model';
@@ -30,10 +31,15 @@ export class ColumnComponent implements OnInit {
     },
   ];
 
+  taskFormAction: 'new' | 'edit';
+  taskTaskToEdit: Task;
+  userId: string | undefined;
+
   constructor(
     private tasksService: TasksService,
     public modalService: ModalServiceService,
-    private columnService: ColumnsService
+    private columnService: ColumnsService,
+    private userService: UsersService
   ) {}
 
   ngOnInit(): void {
@@ -42,6 +48,7 @@ export class ColumnComponent implements OnInit {
         .loadTasks(this.board._id, this.column._id)
         .subscribe((res) => (this.tasks = res));
     }
+    this.getUserId();
   }
   confirmIsVisible = false;
   editIsVisible = false;
@@ -60,6 +67,7 @@ export class ColumnComponent implements OnInit {
   onClickNewTask() {
     this.modalService.open();
     this.newTaskFormIsVisible = true;
+    this.taskFormAction = 'new';
   }
 
   onColumnFormEvent(data: 'close' | { title: string }) {
@@ -89,8 +97,19 @@ export class ColumnComponent implements OnInit {
     this.confirmIsVisible = false;
   }
 
+  getUserId() {
+    this.userService
+      .loadUsers()
+      .subscribe(
+        (res) =>
+          (this.userId = res.filter(
+            (el) => el.login === localStorage.getItem('login')
+          )[0]._id)
+      );
+  }
+
   onTaskFormEvent(data: 'close' | Partial<Task>) {
-    if (data != 'close') {
+    if (data != 'close' && this.taskFormAction === 'new') {
       const lastOrder = this.tasks.length
         ? this.tasks.sort((a, b) => a.order - b.order)[this.tasks.length - 1]
             .order
@@ -110,6 +129,22 @@ export class ColumnComponent implements OnInit {
             .subscribe((res) => (this.tasks = res))
         );
     }
+    if (data != 'close' && this.taskFormAction === 'edit') {
+      this.tasksService
+        .updateTask(
+          this.board._id,
+          this.column._id,
+          this.taskTaskToEdit,
+          data,
+          this.userId,
+          this.board.users
+        )
+        .subscribe(() =>
+          this.tasksService
+            .loadTasks(this.board._id, this.column._id)
+            .subscribe((res) => (this.tasks = res))
+        );
+    }
     this.modalService.close();
     this.newTaskFormIsVisible = false;
   }
@@ -118,5 +153,12 @@ export class ColumnComponent implements OnInit {
     this.tasksService
       .loadTasks(this.board._id, this.column._id)
       .subscribe((res) => (this.tasks = res));
+  }
+
+  openEditTaskForm(task: Task) {
+    this.taskFormAction = 'edit';
+    this.modalService.open();
+    this.newTaskFormIsVisible = true;
+    this.taskTaskToEdit = task;
   }
 }

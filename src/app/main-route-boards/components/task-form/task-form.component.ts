@@ -1,5 +1,6 @@
-import { Component, Output, EventEmitter } from '@angular/core';
+import { Component, Output, EventEmitter, Input } from '@angular/core';
 import { FormControl, FormBuilder, Validators } from '@angular/forms';
+import { Task } from '../../models/task.model';
 
 @Component({
   selector: 'app-task-form',
@@ -8,6 +9,8 @@ import { FormControl, FormBuilder, Validators } from '@angular/forms';
 })
 export class TaskFormComponent {
   constructor(private fb: FormBuilder) {}
+  @Input() taskFormAction: 'new' | 'edit';
+  @Input() task: Task;
 
   taskForm = this.fb.group({
     title: new FormControl('', [
@@ -15,7 +18,10 @@ export class TaskFormComponent {
       Validators.minLength(3),
       Validators.maxLength(20),
     ]),
-    description: new FormControl('', [Validators.maxLength(25)]),
+    description: new FormControl('', [
+      Validators.required,
+      Validators.maxLength(25),
+    ]),
   });
 
   getTitleErrorMessage(): any {
@@ -30,6 +36,9 @@ export class TaskFormComponent {
     }
   }
   getDescriptionErrorMessage(): any {
+    if (this.taskForm.get('description')?.hasError('required')) {
+      return 'You must enter a value';
+    }
     return 'Keep the description under 25 characters';
   }
 

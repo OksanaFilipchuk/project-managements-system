@@ -18,6 +18,11 @@ export class TaskComponent {
   @Input() boardId: string;
   @Input() columnId: string;
   @Output() deleteTaskEvent = new EventEmitter();
+  @Output() editTaskEvent = new EventEmitter();
+
+  showEditTaskForm() {
+    this.editTaskEvent.emit(this.task);
+  }
 
   onClickDelete() {
     this.modalService.open();

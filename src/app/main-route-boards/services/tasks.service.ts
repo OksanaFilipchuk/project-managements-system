@@ -34,4 +34,23 @@ export class TasksService {
     const url = `${this.getUrl(boardId, columnId)}/${task._id}`;
     return this.http.delete<Task[]>(url);
   }
+
+  updateTask(
+    boardId: string,
+    columnId: string,
+    task: Partial<Task>,
+    data: Partial<Task>,
+    userId: string | undefined,
+    users: string[]
+  ) {
+    const url = `${this.getUrl(boardId, columnId)}/${task._id}`;
+    return this.http.put<Task[]>(url, {
+      title: data.title,
+      description: data.description,
+      order: task.order,
+      userId: userId,
+      columnId: columnId,
+      users: users,
+    });
+  }
 }
