@@ -1,0 +1,37 @@
+<div class="container">
+  <div class="header-wrapper">
+    <div>
+      <mat-icon class="back-button" color="grey" (click)="goToBoards()"
+        >arrow_left</mat-icon
+      >
+      <h3>{{ board.title | titlecase }}</h3>
+    </div>
+
+    <button
+      mat-stroked-button
+      color="warn"
+      class="add-column"
+      (click)="openColumnForm()"
+    >
+      + add column
+    </button>
+  </div>
+  <mat-divider></mat-divider>
+
+  <div class="column-wrapper" *ngIf="columns">
+    <app-column
+      *ngFor="let column of columns"
+      [column]="column"
+      [board]="board"
+      (columnEvent)="onColumnEvent()"
+    ></app-column>
+  </div>
+
+  <app-modal *ngIf="modalService.isVisible$.value">
+    <app-column-form
+      title="Create new column"
+      submitButton="Create"
+      (columnFormEvent)="onColumnFormEvent($event)"
+    ></app-column-form>
+  </app-modal>
+</div>

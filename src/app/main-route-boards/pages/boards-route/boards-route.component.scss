@@ -1,0 +1,31 @@
+.board {
+  width: 250px;
+  min-width: 250px;
+  min-height: 150px;
+  background-color: transparent;
+  border-radius: 10px;
+  box-shadow: 3px 3px 3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: ease-in-out 200ms;
+  &:hover {
+    cursor: pointer;
+    background-color: rgb(238, 233, 233, 0.5);
+  }
+}
+
+.boards-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 10px;
+  @media screen and (max-width: 768px) {
+    justify-content: center;
+  }
+}
+
+button {
+  margin-top: -50px;
+  margin-right: -20px;
+}

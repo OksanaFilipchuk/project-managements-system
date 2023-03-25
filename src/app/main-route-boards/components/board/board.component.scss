@@ -1,0 +1,26 @@
+h3 {
+  font-size: 24px;
+  display: inline;
+  margin: o;
+}
+
+.header-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.column-wrapper {
+  max-height: calc(100vh - 100px - 60px - 56px);
+  overflow: auto;
+  white-space: nowrap;
+}
+
+.back-button {
+  &:hover {
+    cursor: pointer;
+  }
+}
+.add-column {
+  margin: 10px;
+}

@@ -1,0 +1,44 @@
+.wrapper {
+  display: flex;
+  padding: 1em;
+  justify-content: space-around;
+  align-items: center;
+  @media screen and (max-width: 500px) {
+    flex-direction: column;
+  }
+}
+
+.about-project-content {
+  width: 50%;
+  @media screen and (max-width: 500px) {
+    width: 100%;
+  }
+}
+
+.wrapper img {
+  max-width: 300px;
+  height: auto;
+  width: 50%;
+  @media screen and (max-width: 500px) {
+    width: 100%;
+  }
+}
+
+.content {
+  padding: 12px;
+  font-size: 16px;
+  line-height: 24px;
+  font-style: italic;
+}
+
+.header {
+  font-family: "Shantell Sans", cursive;
+  font-size: 20px;
+  font-weight: 600;
+  color: rgba(60, 12, 108, 0.9);
+}
+
+.link {
+  color: black;
+  cursor: pointer;
+}

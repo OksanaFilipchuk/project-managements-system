@@ -1,0 +1,50 @@
+<div class="column">
+  <h2>{{ column.title | titlecase }}</h2>
+  <mat-divider></mat-divider>
+  <div class="tasks-wrapper">
+    <app-task
+      *ngFor="let task of tasks"
+      [task]="task"
+      [boardId]="board._id"
+      [columnId]="column._id"
+      (deleteTaskEvent)="updateTasks()"
+      (editTaskEvent)="openEditTaskForm($event)"
+    ></app-task>
+  </div>
+
+  <button mat-mini-fab color="grey" class="deleteBtn" (click)="onClickDelete()">
+    <mat-icon>delete</mat-icon>
+  </button>
+  <button mat-mini-fab color="grey" class="editBtn" (click)="onClickEdit()">
+    <mat-icon>edit</mat-icon>
+  </button>
+  <button
+    mat-button
+    color="grey"
+    class="newTaskBtn"
+    color="warn"
+    (click)="onClickNewTask()"
+  >
+    + add task
+  </button>
+</div>
+
+<app-modal *ngIf="modalService.isVisible$.value">
+  <app-confirmation
+    *ngIf="confirmIsVisible"
+    title="Do you want to remove column?"
+    (confirmEvent)="onConfirmEvent($event)"
+  ></app-confirmation>
+  <app-column-form
+    *ngIf="editIsVisible"
+    title="Edit column"
+    submitButton="Edit"
+    [currentTitle]="column.title"
+    (columnFormEvent)="onColumnFormEvent($event)"
+  ></app-column-form>
+  <app-task-form
+    [taskFormAction]="taskFormAction"
+    *ngIf="newTaskFormIsVisible"
+    (taskFormEvent)="onTaskFormEvent($event)"
+  ></app-task-form>
+</app-modal>

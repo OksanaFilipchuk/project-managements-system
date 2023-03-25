@@ -1,0 +1,21 @@
+<nav class="navbar navbar-expand-lg">
+  <div class="container d-flex justify-content-between">
+    <img
+      src="../../../assets/project-management.png"
+      class="me-2"
+      height="36"
+      alt=""
+    />
+    <div
+      class="navbar d-flex flex-grow-1 justify-content-end justify-content-sm-between"
+    >
+      <span class="nav-link d-none d-sm-block header"
+        >Project Management Tool</span
+      >
+      <div class="d-flex flex-column align-items-end">
+        <button mat-button color="primary">EN/UA</button>
+        <app-authorizing (changeToken)="changeToken($event)"></app-authorizing>
+      </div>
+    </div>
+  </div>
+</nav>

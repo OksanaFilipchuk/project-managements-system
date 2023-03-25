@@ -1,0 +1,68 @@
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Board } from '../../models/board.model';
+import { BoardsService } from '../../services/boards.service';
+import { ModalServiceService } from 'src/app/shared/services/modal-service.service';
+import { FormGroup } from '@angular/forms';
+
+@Component({
+  selector: 'app-boards-route',
+  templateUrl: './boards-route.component.html',
+  styleUrls: ['./boards-route.component.scss'],
+  providers: [ModalServiceService],
+})
+export class BoardsRouteComponent implements OnInit {
+  boards: Board[];
+  confirmVisible = false;
+  formVisible = false;
+  boardToRemove: Board | null = null;
+
+  constructor(
+    private boardsService: BoardsService,
+    public modalService: ModalServiceService
+  ) {}
+
+  ngOnInit(): void {
+    this.boardsService.saveBoards();
+    this.boardsService.loadBoards().subscribe((res) => (this.boards = res));
+  }
+
+  getBoards() {
+    this.boards = this.boardsService.getBoards();
+
+    // this.boardsService
+    //   .loadBoards()
+    //   .subscribe((boards) => (this.boards = boards));
+  }
+
+  deleteBoard(board: Board) {
+    this.boardToRemove = board;
+    this.modalService.open();
+    this.confirmVisible = true;
+  }
+
+  onClick() {
+    this.modalService.open();
+    this.formVisible = true;
+  }
+
+  onNewBoardEvent(data: any) {
+    if (data != 'close') {
+      this.boardsService.addBoard(data).subscribe(() => {
+        this.boardsService.loadBoards().subscribe((res) => (this.boards = res));
+      });
+    }
+    this.modalService.close();
+    this.formVisible = false;
+  }
+
+  onConfirm(event: boolean) {
+    if (event && this.boardToRemove) {
+      this.boardsService.deleteBoard(this.boardToRemove).subscribe(() => {
+        this.boardsService.loadBoards().subscribe((res) => (this.boards = res));
+      });
+    }
+    this.modalService.close();
+    this.confirmVisible = false;
+    this.boardToRemove = null;
+  }
+}
