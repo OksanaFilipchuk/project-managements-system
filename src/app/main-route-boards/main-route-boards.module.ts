@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NewBoardComponent } from './components/new-board/new-board.component';
 import { BoardComponent } from './components/board/board.component';
 import { BoardsRouteComponent } from './pages/boards-route/boards-route.component';
 import { BoardsService } from './services/boards.service';
@@ -19,7 +18,6 @@ import { TaskFormComponent } from './components/task-form/task-form.component';
 
 @NgModule({
   declarations: [
-    NewBoardComponent,
     BoardComponent,
     BoardsRouteComponent,
     BoardFormComponent,
@@ -39,6 +37,6 @@ import { TaskFormComponent } from './components/task-form/task-form.component';
     MainRouteBoardsRoutingModule,
   ],
   providers: [BoardsService, ModalServiceService],
-  exports: [BoardsRouteComponent, NewBoardComponent],
+  exports: [BoardsRouteComponent],
 })
 export class MainRouteBoardsModule {}

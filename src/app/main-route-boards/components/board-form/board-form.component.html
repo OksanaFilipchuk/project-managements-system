@@ -1,14 +1,8 @@
-<h2 class="text-center">Create new board</h2>
-<!-- <form class="form" (submit)="onSubmit()" [formGroup]="newBoardForm"> -->
+<h2 class="text-center">{{ "Create new board" | translate | titlecase }}</h2>
 <form class="form" (submit)="onSubmit()">
   <mat-form-field appearance="fill">
-    <mat-label>Board title</mat-label>
-    <!-- <input
-      matInput
-      placeholder="New board"
-      formControlName="title"
-      id="title"
-    /> -->
+    <mat-label>{{ "Board title" | translate }}</mat-label>
+
     <input
       matInput
       placeholder="New board"
@@ -18,15 +12,6 @@
       required
       minlength="4"
     />
-    <!-- <mat-error *ngIf="title.errors?.['required']">Title is required</mat-error> -->
-    <!-- 
-    <mat-error *ngIf="newBoardForm.controls.title.errors?.['minLength']"
-      >Title must be at least 4 characters</mat-error
-    > -->
-    <!-- <mat-error *ngIf="title.valid.['required']">Title is required</mat-error>
-    <mat-error *ngIf="title.valid.['minLength']"
-      >Title must be at least 4 characters</mat-error
-    > -->
   </mat-form-field>
 
   <ng-multiselect-dropdown
@@ -40,7 +25,9 @@
   >
   </ng-multiselect-dropdown>
 
-  <button mat-button color="primary" (click)="onClick()">Close</button>
+  <button mat-button color="primary" (click)="onClick()">
+    {{ "Close" | translate }}
+  </button>
   <button
     mat-button
     color="primary"
@@ -48,6 +35,6 @@
     value="submitButton"
     [disabled]="title.length < 3"
   >
-    Create
+    {{ "Create" | translate }}
   </button>
 </form>

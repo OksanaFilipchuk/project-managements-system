@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 import { AuthorizeService } from './authorizing/services/authorize.service';
 
 @Component({
@@ -9,13 +10,18 @@ import { AuthorizeService } from './authorizing/services/authorize.service';
   providers: [AuthorizeService],
 })
 export class AppComponent implements OnInit {
-  constructor(private route: Router) {}
+  constructor(private route: Router, public translate: TranslateService) {
+    this.translate.setDefaultLang('ua');
+  }
   ngOnInit(): void {
     if (localStorage.getItem('token')) {
       this.route.navigate(['Boards']);
     } else {
       this.route.navigate(['Welcome']);
     }
+  }
+  changeLang(lang: any) {
+    this.translate.setDefaultLang(lang);
   }
 
   navigateTo(event: any) {

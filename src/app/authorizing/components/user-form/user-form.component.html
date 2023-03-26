@@ -1,8 +1,8 @@
 <div class="container">
-  <h2 class="text-center">Edit profile</h2>
+  <h2 class="text-center">{{ "Edit profile" | translate }}</h2>
   <form class="form" [formGroup]="userForm" (submit)="editProfile()">
     <mat-form-field>
-      <mat-label>Name</mat-label>
+      <mat-label>{{ "Name" | translate }}</mat-label>
       <input matInput formControlName="name" [(ngModel)]="userData.name" />
       <mat-error *ngIf="userForm.controls.name.errors">{{
         getErrorMessage("name")
@@ -10,7 +10,7 @@
     </mat-form-field>
 
     <mat-form-field>
-      <mat-label>Login</mat-label>
+      <mat-label>{{ "Login" | translate }}</mat-label>
       <input matInput formControlName="login" [(ngModel)]="userData.login" />
       <mat-error *ngIf="userForm.controls.login.errors">{{
         getErrorMessage("login")
@@ -18,7 +18,7 @@
     </mat-form-field>
 
     <mat-form-field>
-      <mat-label>Password</mat-label>
+      <mat-label>{{ "Password" | translate }}</mat-label>
       <input
         matInput
         type="password"
@@ -32,7 +32,7 @@
 
     <div class="d-flex justify-content-center">
       <button mat-button color="primary" (click)="closeUserForm()">
-        Close
+        {{ "Close" | translate | titlecase }}
       </button>
       <button
         mat-button
@@ -40,11 +40,11 @@
         type="submit"
         [disabled]="!userForm.valid"
       >
-        Save changes
+        {{ "Save changes" | translate | titlecase }}
       </button>
     </div>
     <button mat-button color="primary" (click)="openDeleteConfirm()">
-      Delete user
+      {{ "Delete user" | translate | titlecase }}
     </button>
   </form>
 </div>

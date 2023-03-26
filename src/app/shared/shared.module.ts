@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 import { CommonModule } from '@angular/common';
 import { ModalComponent } from './components/modal/modal.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -12,6 +13,13 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { ConfirmationComponent } from './components/confirmation/confirmation.component';
 import { FilterByLoginPipe } from './pipes/filter-by-login.pipe';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
+import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+
+export function HttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http);
+}
 
 @NgModule({
   declarations: [
@@ -29,6 +37,13 @@ import { PageNotFoundComponent } from './components/page-not-found/page-not-foun
     MatListModule,
     MatDividerModule,
     ReactiveFormsModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient],
+      },
+    }),
   ],
   exports: [
     ModalComponent,
@@ -44,6 +59,8 @@ import { PageNotFoundComponent } from './components/page-not-found/page-not-foun
     ReactiveFormsModule,
     FilterByLoginPipe,
     PageNotFoundComponent,
+    DragDropModule,
+    TranslateModule,
   ],
 })
 export class SharedModule {}

@@ -1,6 +1,6 @@
 <div class="container">
   <div class="text-center">
-    <h2 class="d-inline text-center p-3">Boards</h2>
+    <h2 class="d-inline text-center p-3">{{ "Boards" | translate }}</h2>
     <button mat-mini-fab color="primary" (click)="onClick()">
       <mat-icon>plus_one</mat-icon>
     </button>
@@ -8,7 +8,9 @@
 
   <mat-divider></mat-divider>
   <div class="boards-container">
-    <div class="board" (click)="onClick()">create new board</div>
+    <div class="board" (click)="onClick()">
+      {{ "create new board" | translate }}
+    </div>
     <app-board-icon
       *ngFor="let board of boards"
       [board]="board"

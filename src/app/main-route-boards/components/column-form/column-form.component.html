@@ -1,7 +1,7 @@
-<h2 class="text-center">{{ title | titlecase }}</h2>
+<h2 class="text-center">{{ title | titlecase | translate }}</h2>
 <form class="form" (submit)="onSubmit()" [formGroup]="columnForm">
   <mat-form-field appearance="fill">
-    <mat-label>Column title</mat-label>
+    <mat-label>{{ "Column title" | translate }}</mat-label>
     <input
       formControlName="title"
       matInput
@@ -11,9 +11,9 @@
     <mat-error *ngIf="columnForm.invalid">{{ getErrorMessage() }}</mat-error>
   </mat-form-field>
   <div>
-    <button mat-button (click)="closeModal()">Close</button>
+    <button mat-button (click)="closeModal()">{{ "Close" | translate }}</button>
     <button mat-button type="submit" [disabled]="!columnForm.valid">
-      {{ submitButton }}
+      {{ submitButton | translate }}
     </button>
   </div>
 </form>
