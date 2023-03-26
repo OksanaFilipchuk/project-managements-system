@@ -24,9 +24,7 @@ export class UserFormComponent implements OnInit {
     public userService: UsersService,
     public router: Router,
     public modal: ModalServiceService
-  ) {
-    this.userService.loadUsers().subscribe((res) => console.log(res));
-  }
+  ) {}
 
   ngOnInit(): void {
     this.userService
@@ -90,7 +88,6 @@ export class UserFormComponent implements OnInit {
   }
 
   editProfile() {
-    console.log(this.userData._id, this.userForm.value);
     if (this.userData._id && this.userForm.value) {
       this.userService
         .editProfile(this.userData._id, this.userForm.value)

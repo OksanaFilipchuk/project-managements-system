@@ -5,9 +5,7 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { ModalServiceService } from 'src/app/shared/services/modal-service.service';
 import { UsersService } from 'src/app/shared/services/users.service';
-import { IDropdownSettings } from 'ng-multiselect-dropdown';
 import { Board, NewBoard } from '../../models/board.model';
 
 @Component({
@@ -20,11 +18,6 @@ export class BoardFormComponent implements OnInit {
     private formBuilder: FormBuilder,
     public userService: UsersService
   ) {}
-
-  // newBoardForm = new FormGroup({
-  //   title: new FormControl('', [Validators.required, Validators.minLength(4)]),
-  //   // selectedItems: new FormControl<any[]>([]),
-  // });
 
   title = '';
 
@@ -63,14 +56,6 @@ export class BoardFormComponent implements OnInit {
   @Output() newBoardEvent = new EventEmitter<NewBoard | 'close'>();
 
   onSubmit() {
-    // if (this.owner && this.newBoardForm.get('title')) {
-    //   this.newBoardEvent.emit({
-    //     title: this.newBoardForm.get('title'),
-    //     owner: this.owner,
-    //     users: this.usersSelected,
-    //   });
-    // }
-
     if (this.owner && this.title) {
       this.newBoardEvent.emit({
         title: this.title,

@@ -28,10 +28,6 @@ export class BoardsRouteComponent implements OnInit {
 
   getBoards() {
     this.boards = this.boardsService.getBoards();
-
-    // this.boardsService
-    //   .loadBoards()
-    //   .subscribe((boards) => (this.boards = boards));
   }
 
   deleteBoard(board: Board) {

@@ -17,7 +17,6 @@ export class BoardIconComponent {
     users: ['', ''],
   };
   @Output() deleteEvent = new EventEmitter<Board>();
-  // @Output() goToBoardEvent = new EventEmitter<Board>();
 
   constructor(
     private router: Router,
@@ -32,15 +31,4 @@ export class BoardIconComponent {
   onClick() {
     this.deleteEvent.emit(this.board);
   }
-
-  // confirmHandle(value: boolean) {
-  //   if (!value) {
-  //     this.modalService.close();
-  //   } else {
-  //     this.boardsService.deleteBoard(this.board).subscribe((res) => {
-  //       this.deleteEvent.emit(this.board);
-  //       console.log(res);
-  //     });
-  //   }
-  // }
 }
