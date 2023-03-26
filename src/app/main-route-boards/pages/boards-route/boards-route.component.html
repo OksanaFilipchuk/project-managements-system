@@ -29,4 +29,6 @@
       (newBoardEvent)="onNewBoardEvent($event)"
     ></app-board-form>
   </app-modal>
+
+  <div appMessage *ngIf="errorMessage">{{ errorMessage }}</div>
 </div>

@@ -19,6 +19,7 @@ export class UserFormComponent implements OnInit {
   };
   messageVisible = false;
   messageText = `Your profile has been updated`;
+  errorMessage = '';
 
   constructor(
     public userService: UsersService,
@@ -29,12 +30,12 @@ export class UserFormComponent implements OnInit {
   ngOnInit(): void {
     this.userService
       .loadUsers()
-      .subscribe(
-        (res) =>
+      .subscribe({
+        next: (res) =>
           (this.userData = res.filter(
             (el) => el.login === localStorage.getItem('login')
-          )[0])
-      );
+          )[0]),
+      });
   }
 
   userForm = new FormGroup({
@@ -91,11 +92,20 @@ export class UserFormComponent implements OnInit {
     if (this.userData._id && this.userForm.value) {
       this.userService
         .editProfile(this.userData._id, this.userForm.value)
-        .subscribe((res) => {
-          this.messageVisible = true;
-          setTimeout(() => {
-            this.messageVisible = false;
-          }, 1000);
+        .subscribe({
+          next: (res) => {
+            this.messageVisible = true;
+            setTimeout(() => {
+              this.messageVisible = false;
+            }, 1000);
+          },
+          error: (error) => {
+            this.errorMessage =
+              error.status === 409
+                ? 'Login already exist'
+                : 'Something went wrong. Try again later';
+            setTimeout(() => (this.errorMessage = ''), 1500);
+          },
         });
     }
   }

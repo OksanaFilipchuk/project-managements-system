@@ -29,6 +29,7 @@
     + {{ "add task" | translate }}
   </button>
 </div>
+<div appMessage *ngIf="errorMessage">{{ errorMessage }}</div>
 
 <app-modal *ngIf="modalService.isVisible$.value">
   <app-confirmation

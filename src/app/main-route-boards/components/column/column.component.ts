@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, Input, Output, OnInit, EventEmitter } from '@angular/core';
 import { ModalServiceService } from 'src/app/shared/services/modal-service.service';
 import { UsersService } from 'src/app/shared/services/users.service';
@@ -17,6 +18,7 @@ export class ColumnComponent implements OnInit {
   @Input() column: Column;
   @Input() board: Board;
   @Output() columnEvent = new EventEmitter();
+  errorMessage = '';
 
   tasks: Task[] = [
     {
@@ -69,12 +71,21 @@ export class ColumnComponent implements OnInit {
     this.newTaskFormIsVisible = true;
     this.taskFormAction = 'new';
   }
+  showErrorMessage(e: HttpErrorResponse) {
+    this.errorMessage = e.message;
+    setTimeout(() => {
+      this.errorMessage = '';
+    }, 1500);
+  }
 
   onColumnFormEvent(data: 'close' | { title: string }) {
     if (data !== 'close') {
       this.columnService
         .editColumn(this.board._id, { ...this.column, ...data })
-        .subscribe((res) => (this.column = res));
+        .subscribe({
+          next: (res) => (this.column = res),
+          error: this.showErrorMessage,
+        });
     }
     this.editIsVisible = false;
     this.modalService.close();
@@ -98,14 +109,13 @@ export class ColumnComponent implements OnInit {
   }
 
   getUserId() {
-    this.userService
-      .loadUsers()
-      .subscribe(
-        (res) =>
-          (this.userId = res.filter(
-            (el) => el.login === localStorage.getItem('login')
-          )[0]._id)
-      );
+    this.userService.loadUsers().subscribe({
+      next: (res) =>
+        (this.userId = res.filter(
+          (el) => el.login === localStorage.getItem('login')
+        )[0]._id),
+      error: this.showErrorMessage,
+    });
   }
 
   onTaskFormEvent(data: 'close' | Partial<Task>) {
@@ -123,11 +133,13 @@ export class ColumnComponent implements OnInit {
           },
           ...data,
         })
-        .subscribe(() =>
-          this.tasksService
-            .loadTasks(this.board._id, this.column._id)
-            .subscribe((res) => (this.tasks = res))
-        );
+        .subscribe({
+          next: () =>
+            this.tasksService
+              .loadTasks(this.board._id, this.column._id)
+              .subscribe((res) => (this.tasks = res)),
+          error: this.showErrorMessage,
+        });
     }
     if (data != 'close' && this.taskFormAction === 'edit') {
       this.tasksService
@@ -139,11 +151,16 @@ export class ColumnComponent implements OnInit {
           this.userId,
           this.board.users
         )
-        .subscribe(() =>
-          this.tasksService
-            .loadTasks(this.board._id, this.column._id)
-            .subscribe((res) => (this.tasks = res))
-        );
+        .subscribe({
+          next: () =>
+            this.tasksService
+              .loadTasks(this.board._id, this.column._id)
+              .subscribe({
+                next: (res) => (this.tasks = res),
+                error: this.showErrorMessage,
+              }),
+          error: this.showErrorMessage,
+        });
     }
     this.modalService.close();
     this.newTaskFormIsVisible = false;
@@ -152,7 +169,10 @@ export class ColumnComponent implements OnInit {
   updateTasks() {
     this.tasksService
       .loadTasks(this.board._id, this.column._id)
-      .subscribe((res) => (this.tasks = res));
+      .subscribe({
+        next: (res) => (this.tasks = res),
+        error: this.showErrorMessage,
+      });
   }
 
   openEditTaskForm(task: Task) {

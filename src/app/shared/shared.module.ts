@@ -16,6 +16,7 @@ import { PageNotFoundComponent } from './components/page-not-found/page-not-foun
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { MessageDirective } from './directives/message.directive';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -27,6 +28,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     ConfirmationComponent,
     FilterByLoginPipe,
     PageNotFoundComponent,
+    MessageDirective,
   ],
   imports: [
     CommonModule,
@@ -61,6 +63,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     PageNotFoundComponent,
     DragDropModule,
     TranslateModule,
+    MessageDirective,
   ],
 })
 export class SharedModule {}

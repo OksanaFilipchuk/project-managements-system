@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
@@ -28,6 +29,7 @@ export class BoardComponent implements OnInit {
       boardId: '',
     },
   ];
+  errorMessage = '';
 
   constructor(
     private router: Router,
@@ -38,19 +40,23 @@ export class BoardComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.boardService.loadBoards().subscribe((boards) => {
-      const currentBoard = boards.filter(
-        (el) => el._id === this.route.snapshot.params['id']
-      )[0];
-      this.board = {
-        _id: currentBoard._id,
-        owner: currentBoard.owner,
-        title: currentBoard.title,
-        users: currentBoard.users,
-      };
-      this.columnService
-        .loadColumns(currentBoard._id)
-        .subscribe((res) => (this.columns = res));
+    this.boardService.loadBoards().subscribe({
+      next: (boards) => {
+        const currentBoard = boards.filter(
+          (el) => el._id === this.route.snapshot.params['id']
+        )[0];
+        this.board = {
+          _id: currentBoard._id,
+          owner: currentBoard.owner,
+          title: currentBoard.title,
+          users: currentBoard.users,
+        };
+        this.columnService.loadColumns(currentBoard._id).subscribe({
+          next: (res) => (this.columns = res),
+          error: this.showErrorMessage,
+        });
+      },
+      error: this.showErrorMessage,
     });
   }
 
@@ -62,6 +68,13 @@ export class BoardComponent implements OnInit {
     this.modalService.open();
   }
 
+  showErrorMessage(e: HttpErrorResponse) {
+    this.errorMessage = e.message;
+    setTimeout(() => {
+      this.errorMessage = '';
+    }, 1500);
+  }
+
   onColumnFormEvent(data: 'close' | { title: string }) {
     if (data !== 'close') {
       const lastOrder = this.columns.length
@@ -71,17 +84,21 @@ export class BoardComponent implements OnInit {
         : 0;
       this.columnService
         .addColumn(this.board._id, { ...data, ...{ order: lastOrder + 1 } })
-        .subscribe(() =>
-          this.columnService
-            .loadColumns(this.board._id)
-            .subscribe((res) => (this.columns = res))
-        );
+        .subscribe({
+          next: () =>
+            this.columnService
+              .loadColumns(this.board._id)
+              .subscribe((res) => (this.columns = res)),
+          error: this.showErrorMessage,
+        });
     }
     this.modalService.close();
   }
+
   onColumnEvent() {
-    this.columnService
-      .loadColumns(this.board._id)
-      .subscribe((res) => (this.columns = res));
+    this.columnService.loadColumns(this.board._id).subscribe({
+      next: (res) => (this.columns = res),
+      error: this.showErrorMessage,
+    });
   }
 }

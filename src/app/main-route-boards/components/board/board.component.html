@@ -34,4 +34,5 @@
       (columnFormEvent)="onColumnFormEvent($event)"
     ></app-column-form>
   </app-modal>
+  <div appMessage *ngIf="errorMessage">{{ errorMessage }}</div>
 </div>

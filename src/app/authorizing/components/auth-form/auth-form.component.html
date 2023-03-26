@@ -6,14 +6,14 @@
     <mat-label>Name</mat-label>
     <input matInput placeholder="Ex. David" formControlName="name" />
     <mat-error *ngIf="userForm.controls['name'].errors">{{
-      getErrorMessage("name")
+      getErrorMessage("name") | translate
     }}</mat-error>
   </mat-form-field>
   <mat-form-field>
     <mat-label>{{ "Login" | translate }}</mat-label>
     <input matInput placeholder="Ex. David" formControlName="login" />
     <mat-error *ngIf="userForm.controls['login'].errors">{{
-      getErrorMessage("login")
+      getErrorMessage("login") | translate
     }}</mat-error>
   </mat-form-field>
   <mat-form-field>

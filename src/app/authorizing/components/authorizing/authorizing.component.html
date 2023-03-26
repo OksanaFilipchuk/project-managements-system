@@ -29,5 +29,8 @@
       title="Do you want to log out?"
       (confirmEvent)="logout($event)"
     ></app-confirmation>
+    <div *ngIf="errorMessage" [ngStyle]="{ color: 'red' }">
+      {{ errorMessage }}
+    </div>
   </app-modal>
 </div>
