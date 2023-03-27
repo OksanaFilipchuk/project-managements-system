@@ -7,11 +7,12 @@
   </div>
 
   <mat-divider></mat-divider>
-  <div class="boards-container">
+  <div class="boards-container" cdkDropList (cdkDropListDropped)="drop($event)">
     <div class="board" (click)="onClick()">
       {{ "create new board" | translate }}
     </div>
     <app-board-icon
+      cdkDrag
       *ngFor="let board of boards"
       [board]="board"
       (deleteEvent)="deleteBoard($event)"

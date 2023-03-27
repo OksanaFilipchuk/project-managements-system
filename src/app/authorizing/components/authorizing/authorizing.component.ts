@@ -5,8 +5,6 @@ import { User } from 'src/app/shared/models/user.model';
 import { AuthorizeService } from '../../services/authorize.service';
 import { UsersService } from 'src/app/shared/services/users.service';
 import { FilterByLoginPipe } from 'src/app/shared/pipes/filter-by-login.pipe';
-import { HttpErrorResponse } from '@angular/common/http';
-import { catchError, of } from 'rxjs';
 
 @Component({
   selector: 'app-authorizing',

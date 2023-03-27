@@ -7,6 +7,7 @@ import { Board } from '../../models/board.model';
 import { Column } from '../../models/column.model';
 import { BoardsService } from '../../services/boards.service';
 import { ColumnsService } from '../../services/columns.service';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-board',
@@ -77,28 +78,47 @@ export class BoardComponent implements OnInit {
 
   onColumnFormEvent(data: 'close' | { title: string }) {
     if (data !== 'close') {
-      const lastOrder = this.columns.length
-        ? this.columns.sort((a, b) => a.order - b.order)[
-            this.columns.length - 1
-          ].order
-        : 0;
+      const lastOrder = this.columns.length ? this.columns.length : 0;
       this.columnService
         .addColumn(this.board._id, { ...data, ...{ order: lastOrder + 1 } })
         .subscribe({
           next: () =>
-            this.columnService
-              .loadColumns(this.board._id)
-              .subscribe((res) => (this.columns = res)),
+            this.columnService.loadColumns(this.board._id).subscribe({
+              next: (res) => {
+                this.columns = res;
+              },
+            }),
           error: this.showErrorMessage,
         });
     }
     this.modalService.close();
   }
 
-  onColumnEvent() {
-    this.columnService.loadColumns(this.board._id).subscribe({
-      next: (res) => (this.columns = res),
+  updateColumnsOrder() {
+    let set: Partial<Column>[] = [];
+    this.columns.forEach((el, index) =>
+      set.push({ _id: el._id, order: index + 1 })
+    );
+    this.columnService.changeColumnsOrder(set).subscribe({
+      next: (res) => {
+        this.columns = res;
+      },
       error: this.showErrorMessage,
     });
+  }
+
+  onColumnEvent() {
+    this.columnService.loadColumns(this.board._id).subscribe({
+      next: (res) => {
+        this.columns = res;
+        this.updateColumnsOrder();
+      },
+      error: this.showErrorMessage,
+    });
+  }
+
+  drop(event: CdkDragDrop<string[]>) {
+    moveItemInArray(this.columns, event.previousIndex, event.currentIndex);
+    this.updateColumnsOrder();
   }
 }

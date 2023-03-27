@@ -18,8 +18,14 @@
   </div>
   <mat-divider></mat-divider>
 
-  <div class="column-wrapper" *ngIf="columns">
+  <div
+    class="column-wrapper"
+    *ngIf="columns"
+    cdkDropList
+    (cdkDropListDropped)="drop($event)"
+  >
     <app-column
+      cdkDrag
       *ngFor="let column of columns"
       [column]="column"
       [board]="board"

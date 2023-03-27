@@ -28,14 +28,12 @@ export class UserFormComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.userService
-      .loadUsers()
-      .subscribe({
-        next: (res) =>
-          (this.userData = res.filter(
-            (el) => el.login === localStorage.getItem('login')
-          )[0]),
-      });
+    this.userService.loadUsers().subscribe({
+      next: (res) =>
+        (this.userData = res.filter(
+          (el) => el.login === localStorage.getItem('login')
+        )[0]),
+    });
   }
 
   userForm = new FormGroup({
@@ -119,6 +117,7 @@ export class UserFormComponent implements OnInit {
       this.userService.deleteProfile(this.userData._id).subscribe(() => {
         localStorage.removeItem('login');
         localStorage.removeItem('token');
+        localStorage.removeItem('userId');
         this.router.navigate(['Welcome']);
       });
     }

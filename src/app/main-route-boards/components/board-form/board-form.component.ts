@@ -1,10 +1,5 @@
 import { Component, Output, EventEmitter, OnInit } from '@angular/core';
-import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
+import { FormBuilder } from '@angular/forms';
 import { UsersService } from 'src/app/shared/services/users.service';
 import { Board, NewBoard } from '../../models/board.model';
 

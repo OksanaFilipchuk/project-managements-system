@@ -2,9 +2,9 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { Board } from '../../models/board.model';
 import { BoardsService } from '../../services/boards.service';
 import { ModalServiceService } from 'src/app/shared/services/modal-service.service';
-import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthorizeService } from 'src/app/authorizing/services/authorize.service';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-boards-route',
@@ -55,6 +55,11 @@ export class BoardsRouteComponent implements OnInit {
     this.modalService.open();
     this.formVisible = true;
   }
+
+  drop(event: CdkDragDrop<string[]>) {
+    moveItemInArray(this.boards, event.previousIndex, event.currentIndex);
+  }
+
   errorHandle(error: any) {
     this.errorMessage = error.message;
     setTimeout(() => (this.errorMessage = ''), 1500);
