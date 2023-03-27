@@ -7,6 +7,8 @@ import { Column } from '../../models/column.model';
 import { Task } from '../../models/task.model';
 import { ColumnsService } from '../../services/columns.service';
 import { TasksService } from '../../services/tasks.service';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-column',
@@ -28,7 +30,7 @@ export class ColumnComponent implements OnInit {
       boardId: '',
       columnId: '',
       description: '',
-      userId: 0,
+      userId: localStorage.getItem('userId') || '',
       users: [],
     },
   ];
@@ -108,36 +110,38 @@ export class ColumnComponent implements OnInit {
     this.confirmIsVisible = false;
   }
 
-  getUserId() {
+  getUserId(): any {
     this.userService.loadUsers().subscribe({
-      next: (res) =>
-        (this.userId = res.filter(
+      next: (res) => {
+        this.userId = res.filter(
           (el) => el.login === localStorage.getItem('login')
-        )[0]._id),
+        )[0]._id;
+        if (this.userId) {
+          localStorage.setItem('userId', this.userId);
+        }
+      },
       error: this.showErrorMessage,
     });
   }
 
   onTaskFormEvent(data: 'close' | Partial<Task>) {
     if (data != 'close' && this.taskFormAction === 'new') {
-      const lastOrder = this.tasks.length
-        ? this.tasks.sort((a, b) => a.order - b.order)[this.tasks.length - 1]
-            .order
-        : 0;
+      const lastOrder = this.tasks.length ? this.tasks.length : 0;
       this.tasksService
         .addTask(this.board._id, this.column._id, {
           ...{
             order: lastOrder + 1,
-            userId: 0,
+            userId: localStorage.getItem('userId') || this.getUserId(),
             users: this.board.users,
           },
           ...data,
         })
         .subscribe({
-          next: () =>
+          next: (res) => {
             this.tasksService
               .loadTasks(this.board._id, this.column._id)
-              .subscribe((res) => (this.tasks = res)),
+              .subscribe((res) => (this.tasks = res));
+          },
           error: this.showErrorMessage,
         });
     }
@@ -166,13 +170,32 @@ export class ColumnComponent implements OnInit {
     this.newTaskFormIsVisible = false;
   }
 
+  updateTasksOrders() {
+    let requests = this.tasks.map((task, index) =>
+      this.tasksService.updateTask(
+        task.boardId,
+        task.columnId,
+        { order: index + 1, _id: task._id },
+        { description: task.description, title: task.title },
+        task.userId,
+        task.users
+      )
+    );
+    forkJoin([...requests]).subscribe({
+      error: () => {
+        this.showErrorMessage;
+      },
+    });
+  }
+
   updateTasks() {
-    this.tasksService
-      .loadTasks(this.board._id, this.column._id)
-      .subscribe({
-        next: (res) => (this.tasks = res),
-        error: this.showErrorMessage,
-      });
+    this.tasksService.loadTasks(this.board._id, this.column._id).subscribe({
+      next: (res) => {
+        this.tasks = res;
+        this.updateTasksOrders();
+      },
+      error: this.showErrorMessage,
+    });
   }
 
   openEditTaskForm(task: Task) {
@@ -180,5 +203,10 @@ export class ColumnComponent implements OnInit {
     this.modalService.open();
     this.newTaskFormIsVisible = true;
     this.taskTaskToEdit = task;
+  }
+
+  drop(event: CdkDragDrop<string[]>) {
+    moveItemInArray(this.tasks, event.previousIndex, event.currentIndex);
+    this.updateTasksOrders();
   }
 }

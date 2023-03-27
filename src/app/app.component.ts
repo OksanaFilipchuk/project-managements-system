@@ -11,8 +11,9 @@ import { AuthorizeService } from './authorizing/services/authorize.service';
 })
 export class AppComponent implements OnInit {
   constructor(private route: Router, public translate: TranslateService) {
-    this.translate.setDefaultLang('ua');
+    this.translate.setDefaultLang('en');
   }
+
   ngOnInit(): void {
     if (localStorage.getItem('token')) {
       this.route.navigate(['Boards']);

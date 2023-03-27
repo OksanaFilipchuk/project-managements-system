@@ -18,7 +18,6 @@ export class MessageDirective implements OnInit {
       font-size: 20px;
       background-color: wheat;
       border-radius: 5px;
-      color:red;
       left: 0;
       right: 0;
       top: 0;

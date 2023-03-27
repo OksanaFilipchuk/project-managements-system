@@ -23,6 +23,7 @@ export class AuthorizeService {
   removeToken() {
     localStorage.removeItem('token');
     localStorage.removeItem('login');
+    localStorage.removeItem('userId');
     this.token = '';
     this.login = '';
   }

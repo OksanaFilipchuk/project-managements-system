@@ -1,7 +1,7 @@
 <div class="column">
   <h2>{{ column.title | titlecase }}</h2>
   <mat-divider></mat-divider>
-  <div class="tasks-wrapper" cdkDroplist>
+  <div class="tasks-wrapper" cdkDropList (cdkDropListDropped)="drop($event)">
     <app-task
       cdkDrag
       *ngFor="let task of tasks"
