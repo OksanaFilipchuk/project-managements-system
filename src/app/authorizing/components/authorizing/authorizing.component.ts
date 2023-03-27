@@ -30,6 +30,7 @@ export class AuthorizingComponent implements OnInit {
   authFormVisible = false;
   logOutConfirmVisible = false;
   userFormVisible = false;
+  errorMessage = '';
 
   ngOnInit(): void {
     if (this.token) {
@@ -81,13 +82,42 @@ export class AuthorizingComponent implements OnInit {
       this.authFormVisible = false;
     } else {
       if (this.isUserNew) {
-        this.authorizeService.signUp(data).subscribe((singUpRes) => {
-          this.authorizeService
-            .signIn({
-              login: data.login,
-              password: data.password,
-            })
-            .subscribe((res) => {
+        this.authorizeService.signUp(data).subscribe({
+          next: (singUpRes) => {
+            this.authorizeService
+              .signIn({
+                login: data.login,
+                password: data.password,
+              })
+              .subscribe({
+                next: (res) => {
+                  if (res.token) {
+                    this.authorizeService.setToken(res.token, data.login);
+                    this.modalService.close();
+                    this.authFormVisible = false;
+                    this.toggleToken();
+                    this.usersService.saveUsers();
+                    this.userLogin = data.login;
+                  }
+                },
+              });
+          },
+          error: (error) => {
+            this.errorMessage =
+              error.status === 409
+                ? 'Login already exist'
+                : 'Something went wrong. Try again later';
+            setTimeout(() => (this.errorMessage = ''), 1500);
+          },
+        });
+      } else {
+        this.authorizeService
+          .signIn({
+            login: data.login,
+            password: data.password,
+          })
+          .subscribe({
+            next: (res) => {
               if (res.token) {
                 this.authorizeService.setToken(res.token, data.login);
                 this.modalService.close();
@@ -96,23 +126,14 @@ export class AuthorizingComponent implements OnInit {
                 this.usersService.saveUsers();
                 this.userLogin = data.login;
               }
-            });
-        });
-      } else {
-        this.authorizeService
-          .signIn({
-            login: data.login,
-            password: data.password,
-          })
-          .subscribe((res) => {
-            if (res.token) {
-              this.authorizeService.setToken(res.token, data.login);
-              this.modalService.close();
-              this.authFormVisible = false;
-              this.toggleToken();
-              this.usersService.saveUsers();
-              this.userLogin = data.login;
-            }
+            },
+            error: (error) => {
+              this.errorMessage =
+                error.status === 401
+                  ? "The login or password isn't correct"
+                  : 'Something went wrong. Try again later';
+              setTimeout(() => (this.errorMessage = ''), 1500);
+            },
           });
       }
     }

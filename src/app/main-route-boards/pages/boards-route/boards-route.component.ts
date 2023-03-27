@@ -2,7 +2,9 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { Board } from '../../models/board.model';
 import { BoardsService } from '../../services/boards.service';
 import { ModalServiceService } from 'src/app/shared/services/modal-service.service';
-import { FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
+import { AuthorizeService } from 'src/app/authorizing/services/authorize.service';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-boards-route',
@@ -15,23 +17,32 @@ export class BoardsRouteComponent implements OnInit {
   confirmVisible = false;
   formVisible = false;
   boardToRemove: Board | null = null;
+  errorMessage = '';
 
   constructor(
     private boardsService: BoardsService,
-    public modalService: ModalServiceService
+    public modalService: ModalServiceService,
+    private router: Router,
+    private authService: AuthorizeService
   ) {}
 
   ngOnInit(): void {
     this.boardsService.saveBoards();
-    this.boardsService.loadBoards().subscribe((res) => (this.boards = res));
+    this.boardsService.loadBoards().subscribe({
+      next: (res) => (this.boards = res),
+      error: (error) => {
+        this.errorMessage = error.message;
+        setTimeout(() => {
+          this.errorMessage = '';
+          this.router.navigate(['Welcome']);
+          this.authService.removeToken();
+        }, 1500);
+      },
+    });
   }
 
   getBoards() {
     this.boards = this.boardsService.getBoards();
-
-    // this.boardsService
-    //   .loadBoards()
-    //   .subscribe((boards) => (this.boards = boards));
   }
 
   deleteBoard(board: Board) {
@@ -45,10 +56,25 @@ export class BoardsRouteComponent implements OnInit {
     this.formVisible = true;
   }
 
+  drop(event: CdkDragDrop<string[]>) {
+    moveItemInArray(this.boards, event.previousIndex, event.currentIndex);
+  }
+
+  errorHandle(error: any) {
+    this.errorMessage = error.message;
+    setTimeout(() => (this.errorMessage = ''), 1500);
+  }
+
   onNewBoardEvent(data: any) {
     if (data != 'close') {
-      this.boardsService.addBoard(data).subscribe(() => {
-        this.boardsService.loadBoards().subscribe((res) => (this.boards = res));
+      this.boardsService.addBoard(data).subscribe({
+        next: () => {
+          this.boardsService.loadBoards().subscribe({
+            next: (res) => (this.boards = res),
+            error: this.errorHandle,
+          });
+        },
+        error: this.errorHandle,
       });
     }
     this.modalService.close();
@@ -57,8 +83,14 @@ export class BoardsRouteComponent implements OnInit {
 
   onConfirm(event: boolean) {
     if (event && this.boardToRemove) {
-      this.boardsService.deleteBoard(this.boardToRemove).subscribe(() => {
-        this.boardsService.loadBoards().subscribe((res) => (this.boards = res));
+      this.boardsService.deleteBoard(this.boardToRemove).subscribe({
+        next: () => {
+          this.boardsService.loadBoards().subscribe({
+            next: (res) => (this.boards = res),
+            error: this.errorHandle,
+          });
+        },
+        error: this.errorHandle,
       });
     }
     this.modalService.close();

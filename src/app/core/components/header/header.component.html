@@ -6,14 +6,13 @@
       height="36"
       alt=""
     />
-    <div
-      class="navbar d-flex flex-grow-1 justify-content-end justify-content-sm-between"
-    >
-      <span class="nav-link d-none d-sm-block header"
-        >Project Management Tool</span
-      >
+    <div class="navbar">
+      <span class="header">{{ "Project management APP" | translate }}</span>
       <div class="d-flex flex-column align-items-end">
-        <button mat-button color="primary">EN/UA</button>
+        <select name="" id="" (change)="changeLang($event.target)">
+          <option value="en">EN</option>
+          <option value="ua">UA</option>
+        </select>
         <app-authorizing (changeToken)="changeToken($event)"></app-authorizing>
       </div>
     </div>

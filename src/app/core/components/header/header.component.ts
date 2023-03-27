@@ -7,7 +7,12 @@ import { Component, EventEmitter, Output } from '@angular/core';
 })
 export class HeaderComponent {
   @Output() changeAppToken = new EventEmitter<{ token: boolean }>();
+  @Output() changeAppLang = new EventEmitter<{ lang: string }>();
+
   changeToken(event: { token: boolean }) {
     this.changeAppToken.emit(event);
+  }
+  changeLang(el: any) {
+    this.changeAppLang.emit(el.value);
   }
 }

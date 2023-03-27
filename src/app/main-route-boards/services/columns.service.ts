@@ -35,4 +35,8 @@ export class ColumnsService {
       order: column.order,
     });
   }
+
+  changeColumnsOrder(array: Partial<Column>[]): Observable<Column[]> {
+    return this.http.patch<Column[]>('http://localhost:3000/columnsSet', array);
+  }
 }

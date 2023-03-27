@@ -1,21 +1,23 @@
-<h2 class="text-center">{{ isUserNew ? "Sing up" : "Log in" }}</h2>
+<h2 class="text-center">
+  {{ (isUserNew ? "Sing up" : "Log in") | translate }}
+</h2>
 <form class="form" (submit)="onSubmit()" [formGroup]="userForm">
   <mat-form-field *ngIf="isUserNew">
     <mat-label>Name</mat-label>
     <input matInput placeholder="Ex. David" formControlName="name" />
     <mat-error *ngIf="userForm.controls['name'].errors">{{
-      getErrorMessage("name")
+      getErrorMessage("name") | translate
     }}</mat-error>
   </mat-form-field>
   <mat-form-field>
-    <mat-label>Login</mat-label>
+    <mat-label>{{ "Login" | translate }}</mat-label>
     <input matInput placeholder="Ex. David" formControlName="login" />
     <mat-error *ngIf="userForm.controls['login'].errors">{{
-      getErrorMessage("login")
+      getErrorMessage("login") | translate
     }}</mat-error>
   </mat-form-field>
   <mat-form-field>
-    <mat-label>Password</mat-label>
+    <mat-label>{{ "Password" | translate }}</mat-label>
     <input
       matInput
       type="password"
@@ -27,7 +29,9 @@
     }}</mat-error>
   </mat-form-field>
   <div class="buttons">
-    <button mat-button color="primary" (click)="closeModal()">Close</button>
+    <button mat-button color="primary" (click)="closeModal()">
+      {{ "Close" | translate }}
+    </button>
     <button
       mat-button
       color="primary"
@@ -39,7 +43,7 @@
             userForm.controls['login'].invalid
       "
     >
-      {{ isUserNew ? "Join" : "Log in" }}
+      {{ (isUserNew ? "Join" : "Log in") | translate }}
     </button>
   </div>
 </form>

@@ -1,5 +1,7 @@
 <div class="confirmation-wrapper">
-  <h2 class="text-center">{{ title }}</h2>
-  <button mat-raised-button (click)="onClick(false)">Close</button>
+  <h2 class="text-center">{{ title | translate }}</h2>
+  <button mat-raised-button (click)="onClick(false)">
+    {{ "Close" | translate }}
+  </button>
   <button mat-raised-button (click)="onClick(true)">Ok</button>
 </div>

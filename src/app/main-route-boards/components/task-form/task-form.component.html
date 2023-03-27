@@ -1,23 +1,25 @@
-<h2 class="text-center">{{ taskFormAction + " task" | titlecase }}</h2>
+<h2 class="text-center">
+  {{ taskFormAction + " task" | titlecase | translate }}
+</h2>
 <form class="form" (submit)="onSubmit()" [formGroup]="taskForm">
   <mat-form-field class="form-field" appearance="fill">
-    <mat-label>Task title</mat-label>
+    <mat-label>{{ "Task title" | translate }}</mat-label>
     <input formControlName="title" matInput placeholder="New task" />
     <mat-error *ngIf="taskForm.controls.title.errors">{{
       getTitleErrorMessage()
     }}</mat-error>
   </mat-form-field>
   <mat-form-field class="form-field" appearance="fill">
-    <mat-label>Description</mat-label>
+    <mat-label>{{ "Description" | translate }}</mat-label>
     <input formControlName="description" matInput placeholder="description" />
     <mat-error *ngIf="taskForm.controls.description.errors">{{
       getDescriptionErrorMessage()
     }}</mat-error>
   </mat-form-field>
   <div>
-    <button mat-button (click)="closeModal()">Close</button>
+    <button mat-button (click)="closeModal()">{{ "Close" | translate }}</button>
     <button mat-button type="submit" [disabled]="!taskForm.valid">
-      {{ taskFormAction === "new" ? "New Task" : "Save" }}
+      {{ (taskFormAction === "new" ? "New Task" : "Save") | translate }}
     </button>
   </div>
 </form>

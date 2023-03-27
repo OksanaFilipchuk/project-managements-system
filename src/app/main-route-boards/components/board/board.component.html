@@ -13,13 +13,19 @@
       class="add-column"
       (click)="openColumnForm()"
     >
-      + add column
+      + {{ "add column" | translate }}
     </button>
   </div>
   <mat-divider></mat-divider>
 
-  <div class="column-wrapper" *ngIf="columns">
+  <div
+    class="column-wrapper"
+    *ngIf="columns"
+    cdkDropList
+    (cdkDropListDropped)="drop($event)"
+  >
     <app-column
+      cdkDrag
       *ngFor="let column of columns"
       [column]="column"
       [board]="board"
@@ -34,4 +40,5 @@
       (columnFormEvent)="onColumnFormEvent($event)"
     ></app-column-form>
   </app-modal>
+  <div appMessage *ngIf="errorMessage">{{ errorMessage }}</div>
 </div>

@@ -1,4 +1,7 @@
-<app-header (changeAppToken)="navigateTo($event)"></app-header>
+<app-header
+  (changeAppToken)="navigateTo($event)"
+  (changeAppLang)="changeLang($event)"
+></app-header>
 <main>
   <router-outlet></router-outlet>
 </main>

@@ -1,8 +1,10 @@
 <div class="d-flex align-items-center">
   <button *ngIf="!token" mat-button class="me-2" (click)="showLoginForm()">
-    Log in
+    {{ "Log in" | translate }}
   </button>
-  <button *ngIf="!token" mat-button (click)="showSingUpForm()">Sign up</button>
+  <button *ngIf="!token" mat-button (click)="showSingUpForm()">
+    {{ "Sign up" | translate }}
+  </button>
   <span *ngIf="token">{{ userLogin }}</span>
   <button
     *ngIf="token"
@@ -12,7 +14,9 @@
   >
     <mat-icon>person icon</mat-icon>
   </button>
-  <button *ngIf="token" mat-button (click)="openConfirm()">Logout</button>
+  <button *ngIf="token" mat-button (click)="openConfirm()">
+    {{ "Log out" | translate }}
+  </button>
 
   <app-modal *ngIf="modalService.isVisible$.value">
     <app-auth-form
@@ -25,5 +29,8 @@
       title="Do you want to log out?"
       (confirmEvent)="logout($event)"
     ></app-confirmation>
+    <div *ngIf="errorMessage" [ngStyle]="{ color: 'red' }">
+      {{ errorMessage }}
+    </div>
   </app-modal>
 </div>

@@ -1,8 +1,9 @@
 <div class="column">
   <h2>{{ column.title | titlecase }}</h2>
   <mat-divider></mat-divider>
-  <div class="tasks-wrapper">
+  <div class="tasks-wrapper" cdkDropList (cdkDropListDropped)="drop($event)">
     <app-task
+      cdkDrag
       *ngFor="let task of tasks"
       [task]="task"
       [boardId]="board._id"
@@ -25,9 +26,10 @@
     color="warn"
     (click)="onClickNewTask()"
   >
-    + add task
+    + {{ "add task" | translate }}
   </button>
 </div>
+<div appMessage *ngIf="errorMessage">{{ errorMessage }}</div>
 
 <app-modal *ngIf="modalService.isVisible$.value">
   <app-confirmation
