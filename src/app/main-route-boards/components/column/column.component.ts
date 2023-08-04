@@ -1,0 +1,212 @@
+import { HttpErrorResponse } from '@angular/common/http';
+import { Component, Input, Output, OnInit, EventEmitter } from '@angular/core';
+import { ModalServiceService } from 'src/app/shared/services/modal-service.service';
+import { UsersService } from 'src/app/shared/services/users.service';
+import { Board } from '../../models/board.model';
+import { Column } from '../../models/column.model';
+import { Task } from '../../models/task.model';
+import { ColumnsService } from '../../services/columns.service';
+import { TasksService } from '../../services/tasks.service';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+import { forkJoin } from 'rxjs';
+
+@Component({
+  selector: 'app-column',
+  templateUrl: './column.component.html',
+  styleUrls: ['./column.component.scss'],
+  providers: [ModalServiceService],
+})
+export class ColumnComponent implements OnInit {
+  @Input() column: Column;
+  @Input() board: Board;
+  @Output() columnEvent = new EventEmitter();
+  errorMessage = '';
+
+  tasks: Task[] = [
+    {
+      _id: '',
+      title: '',
+      order: 0,
+      boardId: '',
+      columnId: '',
+      description: '',
+      userId: localStorage.getItem('userId') || '',
+      users: [],
+    },
+  ];
+
+  taskFormAction: 'new' | 'edit';
+  taskTaskToEdit: Task;
+  userId: string | undefined;
+
+  constructor(
+    private tasksService: TasksService,
+    public modalService: ModalServiceService,
+    private columnService: ColumnsService,
+    private userService: UsersService
+  ) {}
+
+  ngOnInit(): void {
+    if (this.board._id && this.column._id) {
+      this.tasksService
+        .loadTasks(this.board._id, this.column._id)
+        .subscribe((res) => (this.tasks = res));
+    }
+    this.getUserId();
+  }
+  confirmIsVisible = false;
+  editIsVisible = false;
+  newTaskFormIsVisible = false;
+
+  onClickDelete() {
+    this.modalService.open();
+    this.confirmIsVisible = true;
+  }
+
+  onClickEdit() {
+    this.modalService.open();
+    this.editIsVisible = true;
+  }
+
+  onClickNewTask() {
+    this.modalService.open();
+    this.newTaskFormIsVisible = true;
+    this.taskFormAction = 'new';
+  }
+  showErrorMessage(e: HttpErrorResponse) {
+    this.errorMessage = e.message;
+    setTimeout(() => {
+      this.errorMessage = '';
+    }, 1500);
+  }
+
+  onColumnFormEvent(data: 'close' | { title: string }) {
+    if (data !== 'close') {
+      this.columnService
+        .editColumn(this.board._id, { ...this.column, ...data })
+        .subscribe({
+          next: (res) => (this.column = res),
+          error: this.showErrorMessage,
+        });
+    }
+    this.editIsVisible = false;
+    this.modalService.close();
+  }
+
+  onConfirmEvent(data: boolean) {
+    if (data) {
+      this.columnService
+        .deleteColumn(this.board._id, this.column)
+        .subscribe(() => this.columnEvent.emit());
+      this.tasks.forEach((el) =>
+        this.tasksService
+          .deleteTask(this.board._id, this.column._id, el)
+          .subscribe(() => {
+            this.tasks = [];
+          })
+      );
+    }
+    this.modalService.close();
+    this.confirmIsVisible = false;
+  }
+
+  getUserId(): any {
+    this.userService.loadUsers().subscribe({
+      next: (res) => {
+        this.userId = res.filter(
+          (el) => el.login === localStorage.getItem('login')
+        )[0]._id;
+        if (this.userId) {
+          localStorage.setItem('userId', this.userId);
+        }
+      },
+      error: this.showErrorMessage,
+    });
+  }
+
+  onTaskFormEvent(data: 'close' | Partial<Task>) {
+    if (data != 'close' && this.taskFormAction === 'new') {
+      const lastOrder = this.tasks.length ? this.tasks.length : 0;
+      this.tasksService
+        .addTask(this.board._id, this.column._id, {
+          ...{
+            order: lastOrder + 1,
+            userId: localStorage.getItem('userId') || this.getUserId(),
+            users: this.board.users,
+          },
+          ...data,
+        })
+        .subscribe({
+          next: (res) => {
+            this.tasksService
+              .loadTasks(this.board._id, this.column._id)
+              .subscribe((res) => (this.tasks = res));
+          },
+          error: this.showErrorMessage,
+        });
+    }
+    if (data != 'close' && this.taskFormAction === 'edit') {
+      this.tasksService
+        .updateTask(
+          this.board._id,
+          this.column._id,
+          this.taskTaskToEdit,
+          data,
+          this.userId,
+          this.board.users
+        )
+        .subscribe({
+          next: () =>
+            this.tasksService
+              .loadTasks(this.board._id, this.column._id)
+              .subscribe({
+                next: (res) => (this.tasks = res),
+                error: this.showErrorMessage,
+              }),
+          error: this.showErrorMessage,
+        });
+    }
+    this.modalService.close();
+    this.newTaskFormIsVisible = false;
+  }
+
+  updateTasksOrders() {
+    let requests = this.tasks.map((task, index) =>
+      this.tasksService.updateTask(
+        task.boardId,
+        task.columnId,
+        { order: index + 1, _id: task._id },
+        { description: task.description, title: task.title },
+        task.userId,
+        task.users
+      )
+    );
+    forkJoin([...requests]).subscribe({
+      error: () => {
+        this.showErrorMessage;
+      },
+    });
+  }
+
+  updateTasks() {
+    this.tasksService.loadTasks(this.board._id, this.column._id).subscribe({
+      next: (res) => {
+        this.tasks = res;
+        this.updateTasksOrders();
+      },
+      error: this.showErrorMessage,
+    });
+  }
+
+  openEditTaskForm(task: Task) {
+    this.taskFormAction = 'edit';
+    this.modalService.open();
+    this.newTaskFormIsVisible = true;
+    this.taskTaskToEdit = task;
+  }
+
+  drop(event: CdkDragDrop<string[]>) {
+    moveItemInArray(this.tasks, event.previousIndex, event.currentIndex);
+    this.updateTasksOrders();
+  }
+}

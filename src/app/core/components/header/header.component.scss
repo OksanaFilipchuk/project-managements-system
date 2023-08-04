@@ -1,0 +1,32 @@
+nav {
+  background: linear-gradient(
+    177deg,
+    rgba(255, 255, 255, 0.9) 0%,
+    rgba(193, 246, 237, 0.9) 0%,
+    rgba(73, 101, 103, 0.9) 100%
+  );
+}
+
+.header {
+  font-family: "Shantell Sans", cursive;
+  font-size: 20px;
+  font-weight: 600;
+  color: rgba(60, 12, 108, 0.9);
+}
+
+.header {
+  @media screen and (max-width: 820px) {
+    display: none;
+  }
+}
+
+.navbar {
+  display: flex;
+  flex-grow: 1;
+  justify-content: space-between;
+  @media screen and (max-width: 820px) {
+    display: flex;
+    justify-content: space-between;
+    flex-grow: 0;
+  }
+}

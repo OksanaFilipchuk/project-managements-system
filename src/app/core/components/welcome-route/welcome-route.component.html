@@ -1,0 +1,29 @@
+<div class="container">
+  <h2 class="d-sm-none text-center m-2 header">{{ title | translate }}</h2>
+  <div class="wrapper">
+    <div class="about-project-content">
+      <mat-list>
+        <div *ngFor="let capability of capabilities">
+          <mat-list-item>{{ capability | translate }} </mat-list-item>
+          <mat-divider></mat-divider>
+        </div>
+      </mat-list>
+    </div>
+    <img src="../../../assets/welcome.png" alt="" />
+  </div>
+  <mat-tab-group>
+    <mat-tab label="About course">
+      <p class="content">{{ "About course content" | translate }}</p></mat-tab
+    >
+    <mat-tab label="About project and developer">
+      <p class="content">
+        {{ "About project and developer content" | translate }}
+        <a
+          href="https://www.linkedin.com/in/oksana-filipchuk-87724a247/"
+          class="link"
+          >Oksana Filipchuk</a
+        >
+      </p></mat-tab
+    >
+  </mat-tab-group>
+</div>

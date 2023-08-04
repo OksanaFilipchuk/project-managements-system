@@ -1,0 +1,38 @@
+.task {
+  max-width: 100%;
+  border: 1px solid rgb(83, 82, 82, 0.6);
+  border-radius: 5px;
+  overflow-y: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 5px;
+}
+.task-title-wrapper {
+  max-width: 80%;
+  max-height: 45px;
+  overflow: hidden;
+}
+h4,
+h5 {
+  margin-bottom: 0;
+  padding: 0;
+}
+h5 {
+  font-style: italic;
+}
+h4 {
+  font-weight: 500;
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+mat-icon {
+  cursor: pointer;
+  color: rgb(83, 82, 82);
+  transition: 300ms ease-in-out;
+  &:hover {
+    color: #f44336;
+  }
+}
